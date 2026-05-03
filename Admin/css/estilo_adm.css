@@ -1,0 +1,111 @@
+/* --- ESTILOS DEL PANEL DE ADMINISTRACIÓN --- */
+body { 
+    font-family: 'Inter', sans-serif; 
+    background-color: #f8f9fa; 
+}
+
+.card-stats { 
+    border: none; 
+    border-radius: 15px; 
+    transition: transform 0.3s; 
+}
+
+.card-stats:hover { 
+    transform: translateY(-5px); 
+}
+
+.icon-shape { 
+    width: 48px; 
+    height: 48px; 
+    background-color: rgba(255,255,255,0.2); 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 24px; 
+}
+
+.nav-link.active { 
+    font-weight: bold; 
+    border-bottom: 2px solid white; 
+}
+
+/* --- ESTILOS GENERALES DEL PANEL DE ADMINISTRACIÓN --- */
+body { 
+    font-family: 'Inter', sans-serif; 
+    background-color: #f8f9fa; /* Unificado para todo el admin */
+    color: #333;
+}
+
+/* --- NAVBAR ADMIN --- */
+.nav-link.active { 
+    font-weight: bold; 
+    border-bottom: 2px solid white; 
+}
+
+/* --- ESCRITORIO (Dashboard) --- */
+.card-stats { 
+    border: none; 
+    border-radius: 15px; 
+    transition: transform 0.3s; 
+}
+.card-stats:hover { 
+    transform: translateY(-5px); 
+}
+.icon-shape { 
+    width: 48px; 
+    height: 48px; 
+    background-color: rgba(255,255,255,0.2); 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 24px; 
+}
+
+/* --- GESTIÓN DE NOTICIAS (noticia.php) --- */
+.main-card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid #edf2f7;
+    padding: 1.5rem;
+    border-radius: 12px 12px 0 0 !important;
+}
+.img-tabla {
+    width: 100px;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+#tbllistado thead th {
+    background-color: #f8fafc;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+/* --- SUMMERNOTE (Editor de texto) --- */
+.note-editable {
+    min-height: 500px !important;
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: #2b2b2b;
+}
+.note-editable p {
+    margin-bottom: 1.2rem;
+}
+.note-editor .note-editing-area {
+    border-radius: 0 0 8px 8px;
+    min-height: 500px;
+}
+.note-editor.note-frame {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+}
