@@ -1,7 +1,7 @@
  <?php 
  session_unset();
         session_destroy();
-        header("Location: ../Admin/login.php");
+        header("Location: ../admin/login.php");
  
  ?>
  

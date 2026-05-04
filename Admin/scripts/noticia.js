@@ -385,7 +385,7 @@ function mostrar(idnoticia) {
 			$("#explicacion_calificacion").val(data.explicacion_calificacion);
 			$("#cuerpo").summernote("code", data.cuerpo);
 			$("#imagenmuestra").show();
-			$("#imagenmuestra").attr("src", "../files/noticias/" + data.imagen);
+			$("#imagenmuestra").attr("src", "../public/files/noticias/" + data.imagen);
 			$("#imagenactual").val(data.imagen);
 			$("#imagenmuestra").css({
 				width: "200px",

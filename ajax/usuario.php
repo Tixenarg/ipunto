@@ -95,7 +95,7 @@ switch ($_GET["op"]) {
         // Destruimos la sesión
         session_destroy();
         // Redireccionamos al login
-        header("Location: ../Admin/login.php");
+        header("Location: ../admin/login.php");
         exit();
     break;
 }

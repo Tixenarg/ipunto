@@ -1,0 +1,13 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Quitar "/public/"
+    RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /public/
+    RewriteRule ^public/(.*)$ /$1 [R=301,L]
+
+    # Enviar a public EXCEPTO si entran a admin O a ajax
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteCond %{REQUEST_URI} !^/admin/ [NC]
+    RewriteCond %{REQUEST_URI} !^/ajax/ [NC]
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>

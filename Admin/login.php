@@ -109,7 +109,8 @@ if (isset($_SESSION["idusuario"])) {
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script type="text/javascript" src="scripts/login.js"></script>
+
+    <script type="text/javascript" src="scripts/login.js?v=4"></script>
 </body>
 
 </html>

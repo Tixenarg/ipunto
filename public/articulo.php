@@ -69,7 +69,7 @@ include 'header.php';
                 <?php endif; ?>
 
                 <div class="text-center">
-                    <img src="../files/noticias/<?php echo $reg['imagen']; ?>" class="img-fluid featured-image" alt="<?php echo $reg['titulo']; ?>">
+                    <img src="files/noticias/<?php echo $reg['imagen']; ?>" class="img-fluid featured-image" alt="<?php echo $reg['titulo']; ?>">
                 </div>
 
                 <div class="article-content">

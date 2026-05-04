@@ -26,7 +26,7 @@ switch ($_GET["op"]) {
         } else {
             $ext = explode(".", $_FILES["imagen"]["name"]);
             $imagen = round(microtime(true)) . '.' . end($ext);
-            move_uploaded_file($_FILES["imagen"]["tmp_name"], "../files/noticias/" . $imagen);
+            move_uploaded_file($_FILES["imagen"]["tmp_name"], "../public/files/noticias/" . $imagen);
         }
 
         if (empty($idnoticia)) {
@@ -55,7 +55,7 @@ switch ($_GET["op"]) {
                 "2" => $reg->categoria,
                 "3" => $reg->autor,
                 "4" => $reg->calificacion,
-                "5" => "<img src='../files/noticias/" . $reg->imagen . "' class='img-tabla'>",
+                "5" => "<img src='../public/files/noticias/" . $reg->imagen . "' class='img-tabla'>",
                 "6" => ($reg->estado) ? '<span class="badge bg-success">Activado</span>' : '<span class="badge bg-danger">Desactivado</span>'
             );
         }
