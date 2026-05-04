@@ -3,7 +3,7 @@
 define("DB_HOST","localhost");
 
 // Nombre de la base de datos
-define("DB_NAME", "blog_gemini");
+define("DB_NAME", "ipunto");
 
 // Usuario de la base de datos
 define("DB_USERNAME", "root");

@@ -17,8 +17,8 @@
 
     <nav class="navbar navbar-expand-lg sticky-top bg-white">
         <div class="container">
-            <a class="navbar-brand-ipunto" href="index.php">
-                <span class="logo-i-btn">i</span><span class="logo-text-punto">punto<span class="logo-dot-blue">.</span></span>
+            <a class="navbar-brand" href="index.php">
+                <img src="assets/img/LOGO I PUNTO-03.png" alt="Logo Ipunto" style="max-height: 50px;">
             </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
