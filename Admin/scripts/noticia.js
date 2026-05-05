@@ -264,7 +264,9 @@ function init() {
 	mostrarform(false);
 	listar();
 
-	$("#formulario").on("submit", function (e) {
+
+	$("#formulario").off("submit").on("submit", function (e) {
+		e.preventDefault(); // Corta en seco cualquier comportamiento por defecto
 		guardaryeditar(e);
 	});
 
@@ -346,28 +348,64 @@ function listar() {
 	});
 }
 
+
+
+// Variable global que funciona como candado
+// Candado global
+var procesando_envio = false;
+
 function guardaryeditar(e) {
-	e.preventDefault();
-	var formData = new FormData($("#formulario")[0]);
-	$.ajax({
-		url: "../ajax/noticia.php?op=guardaryeditar",
-		type: "POST",
-		data: formData,
-		contentType: false,
-		processData: false,
-		success: function (datos) {
-			// REEMPLAZAMOS BOOTBOX POR SWEETALERT
-			Swal.fire({
-				title: '¡Listo!',
-				text: datos,
-				icon: 'success',
-				confirmButtonText: 'Aceptar'
-			});
-			mostrarform(false);
-			tabla.ajax.reload();
-		},
-	});
+    // Si viene un evento, lo frenamos
+    if(e) e.preventDefault(); 
+
+    if (procesando_envio === true) {
+        return; 
+    }
+
+    // Pasamos el texto de Summernote al textarea oculto ANTES de armar el FormData
+    if ($('#cuerpo').length) {
+        $('#cuerpo').val($('#cuerpo').summernote('code'));
+    }
+
+    procesando_envio = true;
+    var btnContenidoOriginal = $("#btnGuardar").html(); 
+    $("#btnGuardar").prop("disabled", true).html('<i class="fa-solid fa-spinner fa-spin me-2"></i>Guardando...');
+    
+    var formData = new FormData($("#formulario")[0]);
+
+    $.ajax({
+        url: "../ajax/noticia.php?op=guardaryeditar", 
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (datos) {
+            Swal.fire({
+                title: '¡Listo!',
+                text: datos,
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            });
+            mostrarform(false);
+            if (typeof tabla !== 'undefined') tabla.ajax.reload();
+            
+            $("#btnGuardar").prop("disabled", false).html(btnContenidoOriginal);
+            procesando_envio = false;
+        },
+        error: function(error) {
+            console.log("Error crítico de AJAX:", error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Revisar consola (F12). Posible error de PHP en local.',
+                icon: 'error'
+            });
+            $("#btnGuardar").prop("disabled", false).html(btnContenidoOriginal);
+            procesando_envio = false;
+        }
+    });
 }
+
+
 
 function mostrar(idnoticia) {
 	$.post(
@@ -445,5 +483,17 @@ function activar(idnoticia) {
 		}
 	});
 }
+
+$("#titulo").on("input", function() {
+    var limite = 100;
+    var actual = $(this).val().length;
+    $("#titulo_count").text(actual + "/" + limite);
+    
+    if (actual >= limite) {
+        $("#titulo_count").css("color", "red");
+    } else {
+        $("#titulo_count").css("color", "#6c757d");
+    }
+});
 
 init();

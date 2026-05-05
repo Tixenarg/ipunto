@@ -23,6 +23,7 @@ if (isset($_SESSION['tipo']) && $_SESSION['tipo'] != 'Administrador') {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <link rel="stylesheet" href="css/estilo_adm.css">
+    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
 </head>
 
 <body>

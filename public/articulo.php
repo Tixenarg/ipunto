@@ -54,18 +54,7 @@ include 'header.php';
                 </header>
 
                 <?php if (!empty($reg['calificacion'])): ?>
-<!--                     <div class="card check-card mb-5">
-                        <div class="row g-0">
-                            <div class="col-md-3 check-header check-<?php echo strtolower(str_replace(' ', '-', $reg['calificacion'])); ?>">
-                                <i class="fa-solid fa-shield-check d-block mb-2 fs-1"></i>
-                                <span class="fs-4">CHECK</span>
-                            </div>
-                            <div class="col-md-9 p-4 bg-white border-start">
-                                <h4 class="fw-bold text-dark mb-2"><?php echo $reg['calificacion']; ?></h4>
-                                <p class="mb-0 text-secondary small"><?php echo $reg['explicacion_calificacion']; ?></p>
-                            </div>
-                        </div>
-                    </div> -->
+
                 <?php endif; ?>
 
                 <div class="text-center">

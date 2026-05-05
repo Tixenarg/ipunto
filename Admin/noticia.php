@@ -19,10 +19,11 @@ require_once "header_seguridad.php";
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <link rel="stylesheet" href="css/estilo_adm.css">
+    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
 </head>
 
 <body>
-    
+
     <?php include "header_admin.php"; ?>
 
     <div class="container-fluid py-4">
@@ -67,7 +68,7 @@ require_once "header_seguridad.php";
                                 <div class="col-md-8">
                                     <label class="form-label fw-semibold">Título de la Noticia (*)</label>
                                     <input type="hidden" name="idnoticia" id="idnoticia">
-                                    <input type="text" class="form-control" name="titulo" id="titulo" required>
+                                    <input type="text" class="form-control" name="titulo" id="titulo" maxlength="100" required>
                                 </div>
 
                                 <div class="col-md-4">
@@ -78,7 +79,7 @@ require_once "header_seguridad.php";
 
                                 <div class="col-12">
                                     <label class="form-label fw-semibold">Resumen / Bajada</label>
-                                    <textarea class="form-control" name="resumen" id="resumen" rows="2"></textarea>
+                                    <textarea class="form-control" name="resumen" id="resumen" rows="2" maxlength="200"></textarea>
                                 </div>
 
                                 <div class="col-12">
@@ -116,7 +117,8 @@ require_once "header_seguridad.php";
 
                                 <div class="col-12 mt-4 text-end">
                                     <button class="btn btn-light btn-lg" onclick="cancelarform()" type="button">Cancelar</button>
-                                    <button class="btn btn-primary btn-lg px-5" type="submit" id="btnGuardar">
+
+                                    <button class="btn btn-primary btn-lg px-5" type="button" id="btnGuardar" onclick="guardaryeditar(event)">
                                         <i class="fa-solid fa-save me-2"></i>Guardar
                                     </button>
                                 </div>
@@ -138,7 +140,9 @@ require_once "header_seguridad.php";
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/lang/summernote-es-ES.min.js"></script>
 
-    <script type="text/javascript" src="scripts/noticia.js?v=10"></script>
+
+    <script type="text/javascript" src="scripts/noticia.js?v=11"></script>
 
 </body>
+
 </html>

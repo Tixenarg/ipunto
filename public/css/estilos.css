@@ -108,13 +108,25 @@ body {
 .check-falso { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
 .check-opinión, .check-opinion { background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
 
-/* Tarjetas de la Grilla */
-.card-news {
-    border: none;
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+/* Tarjetas de la Grilla (Solo las de abajo) */
+article.card-news {
+    background-color: #ffffff;
+    border: 1px solid rgba(0,0,0,0.03); /* Borde súper sutil */
+    border-radius: 16px;
+    padding: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.card-news:hover { transform: translateY(-10px); }
+article.card-news:hover { 
+    transform: translateY(-8px); 
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); /* Sombra más grande al pasar el mouse */
+}
+
+/* Para que el texto respire adentro de la tarjeta */
+article.card-news .card-body {
+    padding: 12px 8px 0 8px;
+}
 
 .card-news img {
     border-radius: 12px;
@@ -226,4 +238,67 @@ footer a:hover { color: #fff; }
 /* Adaptación para que se lea en el footer negro */
 footer .logo-text-punto {
     color: #ffffff;
+}
+
+/* ==========================================================
+   CAPA DE PROTECCIÓN UI (Line Clamp) - REVISADO
+   ========================================================== */
+/* --- TÍTULO PRINCIPAL (HERO) CORREGIDO --- */
+.main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; /* Achicamos un poco en celulares */
+    line-height: 1.25; /* Le damos aire a los renglones para que no se corten las letras */
+    margin-bottom: 1rem;
+    font-weight: 900;
+    
+    /* Capa de protección UI */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (min-width: 768px) { 
+    .main-title { 
+        font-size: 2.2rem; /* Tamaño mediano para tablets */
+    } 
+}
+
+@media (min-width: 992px) { 
+    .main-title { 
+        font-size: 2.8rem; /* Bajamos de 3.5rem a 2.8rem para PCs. Más elegante y legible. */
+        line-height: 1.2; 
+        margin-bottom: 1.5rem; 
+        min-height: 3.6em; /* 3 renglones * 1.2 de altura = 3.6. Caja perfecta. */
+    } 
+}
+
+/* Títulos de las noticias secundarias (Grilla) */
+.card-news .card-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Máximo 3 renglones */
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+    min-height: 3.6em; /* Altura fija para que todas las cards midan lo mismo */
+    line-height: 1.2;
+}
+
+/* Resúmenes (Bajadas) */
+.card-news .card-text, .hero-section .lead {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Corta al segundo renglón */
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+    min-height: 3em; 
+}
+
+
+
+/* Efecto al pasar el mouse por encima */
+.tarjeta-noticia:hover {
+    transform: translateY(-4px); /* Levanta la tarjeta 4 píxeles hacia arriba */
+    
+    /* Sombra un poco más amplia para dar el efecto de que se despegó del fondo */
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.04);
 }

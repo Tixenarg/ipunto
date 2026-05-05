@@ -2,11 +2,13 @@
     <div class="container text-center text-md-start">
         <div class="row">
             <div class="col-lg-6 mb-5">
-                <a class="navbar-brand-ipunto" href="index.php">
-                    <span class="logo-i-btn">i</span>
-                    <span class="logo-text-punto">punto</span><span class="logo-dot-blue">.</span>
+
+                <a class="navbar-brand" href="index.php">
+                    <img src="assets/img/logoblanco.png"
+                        alt="Logo Ipunto"
+                        class="img-fluid"
+                        style="max-height: 40px; width: auto;">
                 </a>
-                <!-- <h1 class="navbar-brand text-white mb-4">TuQ<span class="text-primary">.</span></h1> -->
                 <p class="text-secondary pe-lg-5">Combatimos la desinformación con datos crudos y periodismo de precisión. Porque la verdad no tiene precio, pero sí tiene pruebas.</p>
                 <div class="d-flex gap-3 mt-4 justify-content-center justify-content-md-start">
                     <a href="#"><i class="fa-brands fa-x-twitter fs-4"></i></a>
@@ -17,7 +19,7 @@
             <div class="col-lg-3 col-md-6 mb-4">
                 <h5>Metodología</h5>
                 <ul class="list-unstyled">
-                    <li><a href="#">El Sello TuQ</a></li>
+                    <li><a href="#">El Sello Ipunto</a></li>
                     <li><a href="#">Fuentes Abiertas</a></li>
                     <li><a href="#">Transparencia</a></li>
                 </ul>
