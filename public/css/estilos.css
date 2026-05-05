@@ -164,7 +164,7 @@ footer a:hover { color: #fff; }
 /* Estética de Cabecera del Artículo */
 .category-badge { font-size: 0.75rem; font-weight: 800; letter-spacing: 2px; color: #0056b3; text-transform: uppercase; margin-bottom: 1rem; display: block; }
 .article-title { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 900; line-height: 1.1; margin-bottom: 2rem; }
-.article-resumen { font-size: 1.3rem; color: #4a5568; font-weight: 400; line-height: 1.6; border-left: 4px solid #0056b3; padding-left: 1.5rem; margin-bottom: 2rem; }
+.article-resumen { font-size: 1.3rem; color: #4a5568; font-weight: 400; line-height: 1.6; border-left: 4px solid #c93b28; padding-left: 1.5rem; margin-bottom: 2rem; }
 
 /* Cuadro de Verificación Interno (Para que no pise las tarjetas del inicio, le exigimos la clase check-header) */
 .check-card { border: none; border-radius: 20px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.07); margin-bottom: 3rem; }
@@ -301,4 +301,16 @@ footer .logo-text-punto {
     
     /* Sombra un poco más amplia para dar el efecto de que se despegó del fondo */
     box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* --- RESALTADO SUTIL PARA TARJETA DE OPINIÓN --- */
+article.card-opinion {
+    border-top: 3px solid #c93b28 !important; /* Acento superior elegante */
+    box-shadow: 0 8px 24px rgba(201, 59, 40, 0.08) !important; /* Sombra suave teñida de rojo */
+}
+
+/* Efecto al pasar el mouse (para que coincida con tu grilla pero en rojo) */
+article.card-opinion:hover {
+    box-shadow: 0 15px 32px rgba(201, 59, 40, 0.15) !important;
+    transform: translateY(-8px);
 }

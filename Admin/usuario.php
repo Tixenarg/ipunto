@@ -73,40 +73,6 @@ if (isset($_SESSION['tipo']) && $_SESSION['tipo'] != 'Administrador') {
                                     <input type="text" class="form-control" name="nombre" id="nombre" maxlength="100" placeholder="Nombre completo" required>
                                 </div>
 
-                                <div class="col-md-3">
-                                    <label class="form-label fw-semibold">Tipo Documento (*)</label>
-                                    <select class="form-select" name="tipo_documento" id="tipo_documento" required>
-                                        <option value="DNI">DNI</option>
-                                        <option value="RUC">RUC</option>
-                                        <option value="CEDULA">CÉDULA</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <label class="form-label fw-semibold">Número (*)</label>
-                                    <input type="text" class="form-control" name="num_documento" id="num_documento" maxlength="20" placeholder="Número de documento" required>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">Dirección</label>
-                                    <input type="text" class="form-control" name="direccion" id="direccion" maxlength="70" placeholder="Dirección">
-                                </div>
-
-                                <div class="col-md-3">
-                                    <label class="form-label fw-semibold">Teléfono</label>
-                                    <input type="text" class="form-control" name="telefono" id="telefono" maxlength="20" placeholder="Teléfono">
-                                </div>
-
-                                <div class="col-md-3">
-                                    <label class="form-label fw-semibold">Email</label>
-                                    <input type="email" class="form-control" name="email" id="email" maxlength="50" placeholder="Email">
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">Cargo</label>
-                                    <input type="text" class="form-control" name="cargo" id="cargo" maxlength="20" placeholder="Cargo">
-                                </div>
-
                                 <div class="col-md-6">
                                     <label class="form-label fw-semibold">Tipo de Usuario (*)</label>
                                     <select name="tipo" id="tipo" class="form-select" required>
@@ -126,7 +92,7 @@ if (isset($_SESSION['tipo']) && $_SESSION['tipo'] != 'Administrador') {
                                     <small class="text-info" id="notaclave">Para editar, deje en blanco si no desea cambiar la clave.</small>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <label class="form-label fw-semibold">Imagen de Perfil</label>
                                     <input type="file" class="form-control" name="imagen" id="imagen" accept="image/*">
                                     <input type="hidden" name="imagenactual" id="imagenactual">
@@ -137,9 +103,11 @@ if (isset($_SESSION['tipo']) && $_SESSION['tipo'] != 'Administrador') {
 
                                 <div class="col-12 mt-4 text-end border-top pt-3">
                                     <button class="btn btn-light btn-lg me-2" onclick="cancelarform()" type="button">Cancelar</button>
-                                    <button class="btn btn-primary btn-lg px-5" type="submit" id="btnGuardar">
-                                        <i class="fa-solid fa-save me-2"></i>Guardar Usuario
-                                    </button>
+                                    <?php if ($_SESSION['tipo'] == 'Administrador'): ?>
+                                        <button class="btn btn-primary btn-lg px-5" type="submit" id="btnGuardar">
+                                            <i class="fa-solid fa-save me-2"></i>Guardar Usuario
+                                        </button>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </form>
@@ -157,6 +125,8 @@ if (isset($_SESSION['tipo']) && $_SESSION['tipo'] != 'Administrador') {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/6.0.0/bootbox.min.js"></script>
 
     <script type="text/javascript" src="scripts/usuario.js"></script>
+
+
 </body>
 
 </html>

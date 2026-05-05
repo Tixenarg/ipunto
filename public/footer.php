@@ -10,11 +10,11 @@
                         style="max-height: 40px; width: auto;">
                 </a>
                 <p class="text-secondary pe-lg-5">Combatimos la desinformación con datos crudos y periodismo de precisión. Porque la verdad no tiene precio, pero sí tiene pruebas.</p>
-                <div class="d-flex gap-3 mt-4 justify-content-center justify-content-md-start">
+<!--                 <div class="d-flex gap-3 mt-4 justify-content-center justify-content-md-start">
                     <a href="#"><i class="fa-brands fa-x-twitter fs-4"></i></a>
                     <a href="#"><i class="fa-brands fa-instagram fs-4"></i></a>
                     <a href="#"><i class="fa-brands fa-linkedin fs-4"></i></a>
-                </div>
+                </div> -->
             </div>
             <div class="col-lg-3 col-md-6 mb-4">
                 <h5>Metodología</h5>

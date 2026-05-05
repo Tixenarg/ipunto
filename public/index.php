@@ -35,9 +35,9 @@ include 'header.php';
                                 </div>
                                 <div class="col-lg-5 p-4 p-md-5 d-flex flex-column justify-content-center bg-white">
                                     <?php if (!empty($reg->calificacion) && $reg->calificacion != 'Noticia'): ?>
-                                        <div class="sello-veritas check-<?php echo strtolower(str_replace(' ', '-', $reg->calificacion)); ?> position-relative" style="z-index: 2;">
+                                        <!--                                         <div class="sello-veritas check-<?php echo strtolower(str_replace(' ', '-', $reg->calificacion)); ?> position-relative" style="z-index: 2;">
                                             <i class="fa-solid fa-shield-check me-1"></i> <?php echo $reg->calificacion; ?>
-                                        </div>
+                                        </div> -->
                                     <?php endif; ?>
 
                                     <a href="articulo.php?id=<?php echo $reg->idnoticia; ?>" class="text-decoration-none text-dark stretched-link">
@@ -69,30 +69,25 @@ include 'header.php';
                         ?>
                             <div class="col-lg-4 col-md-6 mb-4">
                                 <article class="card h-100 card-news position-relative">
-                                    <!-- <article class="card h-100 card-news bg-transparent position-relative"> -->
-                                        <div class="position-relative mb-3">
-                                            <div style="height: 200px; overflow: hidden; border-radius: 12px;">
-                                                <!-- <img src="files/noticias/<?php echo $reg->imagen; ?>" class="w-100 h-100 shadow-sm" style="object-fit: cover;" alt="..."> -->
-                                                <img src="files/noticias/<?php echo $reg->imagen; ?>" class="w-100 h-100" style="object-fit: cover;" alt="...">
-                                            </div>
-                                            <span class="badge bg-dark position-absolute top-0 start-0 m-3 rounded-pill" style="font-size: 0.6rem; z-index: 2;">
-                                                <?php echo $reg->categoria; ?>
-                                            </span>
+                                    <div class="position-relative mb-3">
+                                        <div style="height: 200px; overflow: hidden; border-radius: 12px;">
+                                            <img src="files/noticias/<?php echo $reg->imagen; ?>" class="w-100 h-100" style="object-fit: cover;" alt="...">
                                         </div>
-                                        <div class="card-body p-0">
-                                            <?php if (!empty($reg->calificacion) && $reg->calificacion != 'Noticia'): ?>
-                                                <div class="sello-veritas check-<?php echo mb_strtolower(str_replace(' ', '-', $reg->calificacion), 'UTF-8'); ?> position-relative" style="z-index: 2;">
-                                                    <?php echo $reg->calificacion; ?>
-                                                </div>
-                                            <?php endif; ?>
 
-                                            <a href="articulo.php?id=<?php echo $reg->idnoticia; ?>" class="text-decoration-none text-dark stretched-link">
-                                                <h5 class="card-title" style="font-size: 1.2rem;"><?php echo $reg->titulo; ?></h5>
-                                            </a>
+                                    </div>
+                                    <div class="card-body p-0">
 
-                                            <p class="card-text text-muted small mt-2 d-none d-md-block"><?php echo substr($reg->resumen, 0, 80); ?>...</p>
+                                        <div class="sello-veritas check-<?php echo mb_strtolower(str_replace(' ', '-', $reg->categoria), 'UTF-8'); ?> position-relative" style="z-index: 2; color: #c93b28;">
+                                            <?php echo $reg->categoria; ?>
                                         </div>
-                                    </article>
+
+                                        <a href="articulo.php?id=<?php echo $reg->idnoticia; ?>" class="text-decoration-none text-dark stretched-link">
+                                            <h5 class="card-title" style="font-size: 1.2rem;"><?php echo $reg->titulo; ?></h5>
+                                        </a>
+
+                                        <p class="card-text text-muted small mt-2 d-none d-md-block"><?php echo substr($reg->resumen, 0, 80); ?>...</p>
+                                    </div>
+                                </article>
                             </div>
                     <?php
                     endif;
@@ -102,23 +97,19 @@ include 'header.php';
 
                     <?php if ($opinion): ?>
                         <div class="col-lg-4 col-md-6 mb-4">
-                            <article class="card h-100 card-news  position-relative">
-                                <!-- <article class="card h-100 card-news bg-transparent position-relative"> -->
+                            <!-- <article class="card h-100 card-news  position-relative"> -->
+                            <article class="card h-100 card-news card-opinion position-relative">
+
                                 <div class="position-relative mb-3">
                                     <div style="height: 200px; overflow: hidden; border-radius: 12px;">
-                                        <!-- <img src="files/noticias/<?php echo $opinion->imagen; ?>" class="w-100 h-100 shadow-sm" style="object-fit: cover;" alt="..."> -->
                                         <img src="files/noticias/<?php echo $opinion->imagen; ?>" class="w-100 h-100 " style="object-fit: cover;" alt="...">
                                     </div>
-                                    <span class="badge bg-dark position-absolute top-0 start-0 m-3 rounded-pill" style="font-size: 0.6rem; z-index: 2;">
-                                        <?php echo $opinion->categoria; ?>
-                                    </span>
+
                                 </div>
                                 <div class="card-body p-0">
-                                    <?php if (!empty($opinion->calificacion) && $opinion->calificacion != 'Noticia'): ?>
-                                        <div class="sello-veritas check-<?php echo mb_strtolower(str_replace(' ', '-', $opinion->calificacion), 'UTF-8'); ?> position-relative" style="z-index: 2;">
-                                            <?php echo $opinion->calificacion; ?>
-                                        </div>
-                                    <?php endif; ?>
+                                    <div class="sello-veritas check-position-relative" style="z-index: 2; color: #c93b28;">
+                                        <?php echo "Opinion"; ?>
+                                    </div>
 
                                     <a href="articulo.php?id=<?php echo $opinion->idnoticia; ?>" class="text-decoration-none text-dark stretched-link">
                                         <h5 class="card-title" style="font-size: 1.2rem;"><?php echo $opinion->titulo; ?></h5>
