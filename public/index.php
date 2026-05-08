@@ -98,7 +98,7 @@ include 'header.php';
                     <?php if ($opinion): ?>
                         <div class="col-lg-4 col-md-6 mb-4">
                             <!-- <article class="card h-100 card-news  position-relative"> -->
-                            <article class="card h-100 card-news card-opinion position-relative">
+                            <!--                             <article class="card h-100 card-news card-opinion position-relative">
 
                                 <div class="position-relative mb-3">
                                     <div style="height: 200px; overflow: hidden; border-radius: 12px;">
@@ -115,6 +115,31 @@ include 'header.php';
                                         <h5 class="card-title" style="font-size: 1.2rem;"><?php echo $opinion->titulo; ?></h5>
                                     </a>
                                     <p class="card-text text-muted small mt-2 d-none d-md-block"><?php echo substr($opinion->resumen, 0, 80); ?>...</p>
+                                </div>
+                            </article> -->
+
+                            <article class="card h-100 card-news card-opinion position-relative">
+                                <div class="position-relative mb-3 d-flex">
+                                    <div class="mx-auto" style="width: 200px; height: 200px; overflow: hidden; border-radius: 50%; border: 2px solid #c93b28;">
+                                        <img src="files/noticias/<?php echo $opinion->imagen; ?>"
+                                            class="w-100 h-100"
+                                            style="object-fit: cover;"
+                                            alt="...">
+                                    </div>
+                                </div>
+
+                                <div class="card-body p-0">
+                                    <div class="sello-veritas check-position-relative" style="z-index: 2; color: #c93b28;">
+                                        <?php echo "Opinión"; ?>
+                                    </div>
+
+                                    <a href="articulo.php?id=<?php echo $opinion->idnoticia; ?>" class="text-decoration-none text-dark stretched-link">
+                                        <h5 class="card-title" style="font-size: 1.2rem;"><?php echo $opinion->titulo; ?></h5>
+                                    </a>
+
+                                    <p class="card-text text-muted small mt-2 d-none d-md-block">
+                                        <?php echo substr($opinion->resumen, 0, 80); ?>...
+                                    </p>
                                 </div>
                             </article>
                         </div>
