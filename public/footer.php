@@ -9,7 +9,7 @@
                         class="img-fluid"
                         style="max-height: 40px; width: auto;">
                 </a>
-                <p class="text-secondary pe-lg-5">Combatimos la desinformación con datos crudos y periodismo de precisión. Porque la verdad no tiene precio, pero sí tiene pruebas.</p>
+                <p class="text-secondary pe-lg-5">Todo lo importante del día, en un solo lugar.</p>
                 <!--                 <div class="d-flex gap-3 mt-4 justify-content-center justify-content-md-start">
                     <a href="#"><i class="fa-brands fa-x-twitter fs-4"></i></a>
                     <a href="#"><i class="fa-brands fa-instagram fs-4"></i></a>
