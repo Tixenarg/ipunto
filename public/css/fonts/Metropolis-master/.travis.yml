@@ -1,8 +1,0 @@
-language: python
-
-install:
-  - pip install --upgrade pip
-  - pip install -r Sources/requirements.txt
-
-script:
-- ./Sources/build.sh
