@@ -74,7 +74,7 @@ public function insertar($idusuario, $idcategoria, $titulo, $resumen, $cuerpo, $
         FROM noticia n 
         INNER JOIN categoria c ON n.idcategoria = c.idcategoria 
         WHERE n.estado = '1' AND n.calificacion != 'Opinion' AND n.calificacion != 'Opinión'
-        ORDER BY n.idnoticia DESC LIMIT 6";
+        ORDER BY n.idnoticia DESC LIMIT 7";
         return ejecutarConsulta($sql);
     }
 

@@ -1,0 +1,21 @@
+# Evitar ver listado de carpetas
+Options -Indexes
+# Asegurar que reconozca el index
+DirectoryIndex index.php
+
+# Soporte para imágenes
+AddType image/avif .avif
+AddType image/webp .webp
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Le decimos que la base es la carpeta ipunto
+    RewriteBase /ipunto/
+
+    # Mismas reglas, pero sin forzar que empiecen desde la raíz exacta
+    RewriteCond %{REQUEST_URI} !/public/ [NC]
+    RewriteCond %{REQUEST_URI} !/admin/ [NC]
+    RewriteCond %{REQUEST_URI} !/ajax/ [NC]
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>

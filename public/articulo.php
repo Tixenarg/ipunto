@@ -21,25 +21,11 @@ include 'header.php';
 <div class="container mt-5 pt-lg-2">
     <div class="row justify-content-center">
         
-<!--         <div class="col-lg-1 d-none d-lg-block">
-            <div class="share-bar">
-                <span class="small fw-bold text-muted mb-2" style="writing-mode: vertical-rl; text-orientation: mixed;">COMPARTIR</span>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode("http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']); ?>" target="_blank" class="share-link bg-facebook">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="https://twitter.com/intent/tweet?text=<?php echo urlencode($reg['titulo']); ?>&url=<?php echo urlencode("http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']); ?>" target="_blank" class="share-link bg-twitter">
-                    <i class="fa-brands fa-x-twitter"></i>
-                </a>
-                <a href="https://api.whatsapp.com/send?text=<?php echo urlencode($reg['titulo'] . " " . "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']); ?>" target="_blank" class="share-link bg-whatsapp">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
-            </div>
-        </div> -->
 
         <div class="col-lg-8">
             <article>
                 <header class="mb-5">
-                    <span class="category-badge" style="color: #c93b28;"><?php echo $reg['categoria']; ?></span>
+                    <!-- <span class="category-badge" style="color: #c93b28;"><?php echo $reg['categoria']; ?></span> -->
                     <!-- <span class="category-badge"><?php echo $reg['categoria']; ?></span> -->
                     <h1 class="article-title"><?php echo $reg['titulo']; ?></h1>
                     <p class="article-resumen"><?php echo $reg['resumen']; ?></p>

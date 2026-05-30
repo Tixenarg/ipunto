@@ -1,21 +1,18 @@
-# Evitar ver listado de carpetas
 Options -Indexes
-# Asegurar que reconozca el index
 DirectoryIndex index.php
-
-# Soporte para imágenes
-AddType image/avif .avif
-AddType image/webp .webp
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    
-    # Le decimos que la base es la carpeta ipunto
-    RewriteBase /ipunto/
 
-    # Mismas reglas, pero sin forzar que empiecen desde la raíz exacta
-    RewriteCond %{REQUEST_URI} !/public/ [NC]
-    RewriteCond %{REQUEST_URI} !/admin/ [NC]
-    RewriteCond %{REQUEST_URI} !/ajax/ [NC]
+    # 1. FRENO: Si el archivo ya existe (ej: fotos, css, o el mismo index.php), no redirigir.
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # 2. REGLA A PRUEBA DE BALAS PARA EL SLUG
+    # Atrapa "articulo/ID" O "public/articulo/ID" y lo manda internamente al PHP.
+    RewriteRule ^(?:public/)?articulo/([0-9]+)-.*$ public/articulo.php?id=$1 [L,QSA,NC]
+
+    # 3. REDIRECCIÓN GENERAL AL PUBLIC
     RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>

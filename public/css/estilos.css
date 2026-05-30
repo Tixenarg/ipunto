@@ -1,47 +1,61 @@
-@import url('https://api.fontshare.com/v2/css?f[]=metropolis@400,700&display=swap');
+/* =======================================================
+   1. IMPORTACIÓN DE FUENTES (Metropolis)
+   ======================================================= */
+@font-face {
+    font-family: 'Metropolis';
+    src: url('fonts/Metropolis-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
 
+@font-face {
+    font-family: 'Metropolis';
+    src: url('fonts/Metropolis-Black.otf') format('opentype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+/* =======================================================
+   2. VARIABLES Y BODY
+   ======================================================= */
 :root {
     --primary-dark: #1a1a1a;
     --accent-blue: #0056b3;
     --true-green: #2ecc71;
     --false-red: #e74c3c;
-    --enganioso-orange: #f39c12; 
+    --enganioso-orange: #f39c12;
 }
 
 body {
-    font-family: 'Metropolis', sans-serif;
+    font-family: 'Metropolis', Arial, sans-serif;
     background-color: #fff;
     color: var(--primary-dark);
 }
 
-/* Navbar Minimalista (Ahora con efecto blur transparente muy moderno) */
+.container {
+    max-width: 1140px !important;
+}
+
+/* =======================================================
+   3. NAVBAR Y LOGO
+   ======================================================= */
 .navbar {
     padding: 1.5rem 0;
     transition: all 0.3s;
-    border-bottom: 1px solid #eee; 
-    background: rgba(255,255,255,0.9) !important; 
+    border-bottom: 1px solid #eee;
+    background: rgba(255, 255, 255, 0.9) !important;
     backdrop-filter: blur(10px);
 }
 
-.navbar-brand {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    font-weight: 900;
-}
-
-.nav-link {
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: var(--primary-dark) !important;
-    padding: 0.5rem 1.5rem !important;
-}
-
-/* --- LOGO INTEGRADO "ipunto." --- */
 .navbar-brand-ipunto {
     display: inline-flex;
-    align-items: baseline; 
+    align-items: baseline;
     text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.navbar-brand-ipunto:hover {
+    transform: scale(1.02);
 }
 
 .logo-i-btn {
@@ -49,10 +63,10 @@ body {
     color: #ffffff;
     font-family: 'Inter', sans-serif;
     font-weight: 800;
-    font-size: 1.8rem; 
-    padding: 2px 10px; 
+    font-size: 1.8rem;
+    padding: 2px 10px;
     border-radius: 6px;
-    margin-right: 1px; 
+    margin-right: 1px;
 }
 
 .logo-text-punto {
@@ -60,7 +74,7 @@ body {
     font-size: 2.4rem;
     font-weight: 900;
     color: var(--primary-dark);
-    letter-spacing: 1px; 
+    letter-spacing: 1px;
 }
 
 .logo-dot-blue {
@@ -71,51 +85,23 @@ footer .logo-text-punto {
     color: #ffffff;
 }
 
-.navbar-brand-ipunto {
-    display: inline-flex;
-    align-items: baseline; 
-    text-decoration: none;
-}
-
-.logo-i-btn {
-    background-color: var(--accent-blue);
-    color: #ffffff;
-    font-family: 'Inter', sans-serif;
-    font-weight: 800;
-    font-size: 1.8rem; 
-    padding: 2px 10px; 
-    border-radius: 6px;
-    margin-right: 1px; 
-}
-
-.logo-text-punto {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.4rem;
-    font-weight: 900;
-    color: var(--primary-dark);
-    letter-spacing: 1px; 
-}
-
-.logo-dot-blue {
-    color: var(--accent-blue);
-}
-
 /* =======================================================
-   TÍTULOS DE SECCIÓN
+   4. TÍTULOS DE SECCIÓN (Caja Roja)
    ======================================================= */
 .section-separator {
     display: flex;
     align-items: center;
-    margin-bottom: 3rem;
-    margin-top: 1rem;
+    margin-bottom: 2rem;
 }
 
 .section-separator h2 {
     font-family: 'Playfair Display', serif;
     font-weight: 900;
-    font-size: 2.2rem;
-    margin-bottom: 0;
-    padding-right: 20px;
+    margin: 0;
+    background-color: #c93b28;
+    color: #ffffff !important;
+    padding: 0.4rem 1.2rem;
+    border-radius: 4px 0 0 4px;
 }
 
 .section-separator::after {
@@ -125,50 +111,147 @@ footer .logo-text-punto {
     background-color: #c93b28;
 }
 
-/* --- NOTICIA DESTACADA (HERO) RESPONSIVA --- */
-.hero-section {
-    position: relative;
-    border-radius: 20px;
-    overflow: hidden;
-    margin-bottom: 3rem;
-    border: none;
-}
-
-/* Control de altura de la imagen por dispositivo */
+/* =======================================================
+   5. NOTICIA PRINCIPAL & PUNTO DE VISTA (HERO ADAPTATIVO)
+   ======================================================= */
+/* El contenedor ahora se amolda EXACTAMENTE a la altura natural de la foto */
+/* =======================================================
+   5. NOTICIA PRINCIPAL & PUNTO DE VISTA (HERO ADAPTATIVO)
+   ======================================================= */
+/* El contenedor base */
+/* =======================================================
+   5. NOTICIA PRINCIPAL & PUNTO DE VISTA (HERO ADAPTATIVO)
+   ======================================================= */
+/* El contenedor base de la imagen */
 .hero-img-container {
-    height: 250px;
-    display: flex; 
-    padding: 0 !important;
-    margin: 0 !important;
-}
-
-.hero-img-container img {
+    position: relative; 
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: 100%; /* Ocupa el 100% de la altura de la fila */
+    display: flex;
+    align-items: stretch; /* Estira la imagen al contenedor */
+    justify-content: center;
+    overflow: hidden;
+    background-color: transparent; 
+    border-radius: 12px 12px 0 0 !important;
 }
 
-@media (min-width: 768px) {
-    .hero-img-container { height: 350px; }
+.hero-bg-blur {
+    display: none !important;
 }
 
-@media (min-width: 992px) {
-    .hero-img-container { height: 100%; min-height: 450px; }
+/* La foto real manda: ahora usa cover para garantizar que tape el 100% del alto y ancho de su columna */
+.hero-img {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+    object-fit: cover; /* Recorta milimétricamente los excesos para que la base coincida con el texto */
+    object-position: center center;
+    border-radius: 12px 12px 0 0 !important;
 }
 
-/* Título dinámico */
+/* El contenedor del texto: Aseguramos fondo blanco absoluto y altura completa */
+.hero-text-container {
+    background-color: #ffffff !important;
+    height: 100%; /* Obliga a la caja blanca a medir exactamente lo mismo que la columna de la foto */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra el texto verticalmente de forma elegante */
+    border-radius: 0 0 12px 12px !important;
+}
+
+/* Título Principal */
 .main-title {
     font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    line-height: 1.1;
+    font-size: 1.6rem;
+    line-height: 1.25;
     margin-bottom: 1rem;
     font-weight: 900;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-@media (min-width: 768px) { .main-title { font-size: 2.5rem; } }
-@media (min-width: 992px) { .main-title { font-size: 3.5rem; line-height: 1; margin-bottom: 1.5rem; } }
+/* Ajustes para Tablets */
+@media (min-width: 768px) and (max-width: 991px) {
+    .main-title {
+        font-size: 2.2rem;
+    }
+}
 
-/* Sellos de Verificación (Para Portada - Claritos) */
+/* Ajustes Profesionales para PC (Pantallas Grandes) */
+@media (min-width: 992px) {
+    .hero-img-container {
+        border-radius: 12px 0 0 12px !important; 
+    }
+
+    .hero-img {
+        border-radius: 12px 0 0 12px !important; 
+    }
+
+    .hero-text-container {
+        border-radius: 0 12px 12px 0 !important; 
+        padding: 2.5rem !important; 
+    }
+
+    .main-title {
+        font-size: 2.4rem; 
+        line-height: 1.2;
+        margin-bottom: 1rem;
+        min-height: auto; 
+    }
+}
+
+/* =======================================================
+   6. GRILLA DE NOTICIAS (Secundarias)
+   ======================================================= */
+article.card-news {
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    border-radius: 16px;
+    padding: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+article.card-news:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+article.card-news .card-body {
+    padding: 12px 8px 0 8px;
+}
+
+.card-news img:not(.hero-img) {
+    border-radius: 12px;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    object-position: center top;
+}
+
+.card-news .card-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 3.6em;
+    line-height: 1.2;
+}
+
+.card-news .card-text,
+.hero-section .lead {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 3em;
+}
+
+/* Sellos Veritas */
 .sello-veritas {
     display: inline-block;
     padding: 4px 12px;
@@ -180,239 +263,228 @@ footer .logo-text-punto {
     margin-bottom: 1rem;
 }
 
-.check-verdadero { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
-.check-falso { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
-.check-opinión, .check-opinion { background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
-
-/* Tarjetas de la Grilla (Solo las de abajo) */
-article.card-news {
-    background-color: #ffffff;
-    border: 1px solid rgba(0,0,0,0.03); /* Borde súper sutil */
-    border-radius: 16px;
-    padding: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+.check-verdadero {
+    background: #dcfce7;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
 }
 
-article.card-news:hover { 
-    transform: translateY(-8px); 
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); 
+.check-falso {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
 }
 
-article.card-news .card-body {
-    padding: 12px 8px 0 8px;
+.check-opinión,
+.check-opinion {
+    background: #e0e7ff;
+    color: #3730a3;
+    border: 1px solid #c7d2fe;
 }
 
-.card-news img {
-    border-radius: 12px;
-    width: 100%; 
-    height: auto; 
-    aspect-ratio: 16/9; 
-    object-fit: cover; 
-    object-position: center top; 
-}
-
-/* Footer Elegante */
-footer { background: #000; color: #fff; padding: 5rem 0 2rem; margin-top: 5rem; }
-footer h5 { font-family: 'Playfair Display', serif; font-weight: 700; margin-bottom: 1.5rem; }
-footer a { color: #999; text-decoration: none; transition: 0.3s; font-size: 0.9rem; }
-footer a:hover { color: #fff; }
-
-@media (max-width: 768px) {
-    .section-separator h2 { font-size: 1.6rem; }
-    .hero-section .lead { font-size: 1rem; }
-}
-.container { max-width: 1140px !important; }
-
-/* ==========================================================
-   ESTILOS ESPECÍFICOS DEL ARTÍCULO (articulo.php)
-   ========================================================== */
-
-/* Barra de compartir lateral */
-.share-bar { position: sticky; top: 120px; display: flex; flex-direction: column; gap: 12px; align-items: center; }
-.share-link { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; text-decoration: none; transition: all 0.3s ease; }
-.share-link:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); color: #fff; }
-.bg-facebook { background-color: #1877f2; }
-.bg-twitter { background-color: #000; }
-.bg-whatsapp { background-color: #25d366; }
-
-.category-badge { font-size: 0.75rem; font-weight: 800; letter-spacing: 2px; color: #0056b3; text-transform: uppercase; margin-bottom: 1rem; display: block; }
-.article-title { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 900; line-height: 1.1; margin-bottom: 2rem; }
-.article-resumen { font-size: 1.3rem; color: #4a5568; font-weight: 400; line-height: 1.6; border-left: 4px solid #c93b28; padding-left: 1.5rem; margin-bottom: 2rem; }
-
-.check-card { border: none; border-radius: 20px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.07); margin-bottom: 3rem; }
-.check-header { padding: 2rem; font-family: 'Playfair Display', serif; font-weight: 900; color: #fff !important; text-align: center; border: none !important; }
-.check-header.check-verdadero { background-color: var(--true-green) !important; }
-.check-header.check-falso { background-color: var(--false-red) !important; }
-.check-header.check-engañoso, .check-header.check-enganioso { background-color: var(--enganioso-orange) !important; }
-
-.featured-image { border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15); margin-bottom: 3.5rem; width: 100%; }
-.article-content { font-size: 1.2rem; color: #2d3748; max-width: 760px; margin: 0 auto; line-height: 1.8; overflow-x: hidden; }
-.article-content p { margin-bottom: 1.8rem; }
-
-/* Limpieza de listas en artículos */
-article ul, article ol { padding-left: 1.5rem !important; margin-bottom: 1.5rem !important; }
-article li br, article ul > br { display: none !important; }
-article li { list-style-position: outside !important; line-height: 1.6 !important; margin-bottom: 0.5rem !important; color: inherit; }
-article li * { margin: 0 !important; display: inline !important; }
-
-/* =======================================================
-   FOOTER Y GENERALES
-   ======================================================= */
-footer { background: #000; color: #fff; padding: 5rem 0 2rem; margin-top: 5rem; }
-footer h5 { font-family: 'Playfair Display', serif; font-weight: 700; margin-bottom: 1.5rem; }
-footer a { color: #999; text-decoration: none; transition: 0.3s; font-size: 0.9rem; }
-footer a:hover { color: #fff; }
-footer .logo-text-punto { color: #ffffff; }
-
-.container { max-width: 1140px !important; }
-
-/* =======================================================
-   MEDIA QUERIES (Ajustes Móviles Finales)
-   ======================================================= */
-@media (max-width: 991px) {
-    .article-title { font-size: 2.5rem; }
-    .share-bar { flex-direction: row; position: relative; top: 0; justify-content: center; margin-bottom: 3rem; }
-    .share-bar span { display: none; }
-}
-/* --- LOGO INTEGRADO "ipunto." --- */
-.navbar-brand-ipunto {
-    display: flex;
-    align-items: center; 
-    text-decoration: none;
-    transition: transform 0.3s ease;
-}
-
-.navbar-brand-ipunto:hover {
-    transform: scale(1.02);
-}
-
-/* ==========================================================
-   LOGO "ipunto." - ALINEACIÓN PERFECTA
-   ========================================================== */
-
-.navbar-brand-ipunto {
-    display: inline-flex;
-    align-items: baseline; 
-    text-decoration: none;
-    /* Eliminamos el 'transition' que estaba acá */
-}
-
-/* Borramos el bloque .navbar-brand-ipunto:hover por completo */
-
-.logo-i-btn {
-    background-color: var(--accent-blue);
-    color: #ffffff;
-    font-family: 'Inter', sans-serif;
-    font-weight: 800;
-    font-size: 1.8rem; 
-    padding: 2px 10px; 
-    border-radius: 6px;
-    margin-right: 1px; 
-}
-
-/* ... (el resto del código de .logo-text-punto y el footer quedan igual) ... */
-
-.logo-text-punto {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.4rem;
-    font-weight: 900;
-    color: var(--primary-dark);
-    
-    /* TU SUGERENCIA: Le damos aire a las letras para equilibrar el peso visual */
-    letter-spacing: 1px; 
-}
-
-.logo-dot-blue {
-    color: var(--accent-blue);
-}
-
-/* Adaptación para que se lea en el footer negro */
-footer .logo-text-punto {
-    color: #ffffff;
-}
-
-/* ==========================================================
-   CAPA DE PROTECCIÓN UI (Line Clamp) - REVISADO
-   ========================================================== */
-/* --- TÍTULO PRINCIPAL (HERO) CORREGIDO --- */
-.main-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.6rem; /* Achicamos un poco en celulares */
-    line-height: 1.25; /* Le damos aire a los renglones para que no se corten las letras */
-    margin-bottom: 1rem;
-    font-weight: 900;
-    
-    /* Capa de protección UI */
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;  
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-@media (min-width: 768px) { 
-    .main-title { 
-        font-size: 2.2rem; /* Tamaño mediano para tablets */
-    } 
-}
-
-@media (min-width: 992px) { 
-    .main-title { 
-        font-size: 2.8rem; /* Bajamos de 3.5rem a 2.8rem para PCs. Más elegante y legible. */
-        line-height: 1.2; 
-        margin-bottom: 1.5rem; 
-        min-height: 3.6em; /* 3 renglones * 1.2 de altura = 3.6. Caja perfecta. */
-    } 
-}
-
-/* Títulos de las noticias secundarias (Grilla) */
-.card-news .card-title {
-    display: -webkit-box;
-    -webkit-line-clamp: 3; /* Máximo 3 renglones */
-    -webkit-box-orient: vertical;  
-    overflow: hidden;
-    min-height: 3.6em; /* Altura fija para que todas las cards midan lo mismo */
-    line-height: 1.2;
-}
-
-/* Resúmenes (Bajadas) */
-.card-news .card-text, .hero-section .lead {
-    display: -webkit-box;
-    -webkit-line-clamp: 2; /* Corta al segundo renglón */
-    -webkit-box-orient: vertical;  
-    overflow: hidden;
-    min-height: 3em; 
-}
-
-
-
-/* Efecto al pasar el mouse por encima */
-.tarjeta-noticia:hover {
-    transform: translateY(-4px); /* Levanta la tarjeta 4 píxeles hacia arriba */
-    
-    /* Sombra un poco más amplia para dar el efecto de que se despegó del fondo */
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.04);
-}
-
-/* --- RESALTADO SUTIL PARA TARJETA DE OPINIÓN --- */
+/* Resaltado de Opinión (Grilla) */
 article.card-opinion {
-    border-top: 3px solid #c93b28 !important; /* Acento superior elegante */
-    box-shadow: 0 8px 24px rgba(201, 59, 40, 0.08) !important; /* Sombra suave teñida de rojo */
+    border-top: 3px solid #c93b28 !important;
+    box-shadow: 0 8px 24px rgba(201, 59, 40, 0.08) !important;
+    transition: all 0.3s ease;
 }
 
-/* Efecto al pasar el mouse (para que coincida con tu grilla pero en rojo) */
 article.card-opinion:hover {
     box-shadow: 0 15px 32px rgba(201, 59, 40, 0.15) !important;
     transform: translateY(-8px);
 }
 
-/* Efecto de la opinion */
-.card-opinion:hover img {
+.card-opinion:hover img:not(.hero-img) {
     transform: scale(1.1);
     transition: transform 0.3s ease;
 }
 
-.card-opinion {
+/* =======================================================
+   7. ARTÍCULO INTERNO (articulo.php)
+   ======================================================= */
+.category-badge {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #0056b3;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.article-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 2rem;
+}
+
+.article-resumen {
+    font-size: 1.3rem;
+    color: #4a5568;
+    font-weight: 400;
+    line-height: 1.6;
+    border-left: 4px solid #c93b28;
+    padding-left: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.featured-image {
+    border-radius: 24px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    margin-bottom: 3.5rem;
+    width: 100%;
+}
+
+.article-content {
+    font-size: 1.2rem;
+    color: #2d3748;
+    max-width: 760px;
+    margin: 0 auto;
+    line-height: 1.8;
+    overflow-x: hidden;
+}
+
+.article-content p {
+    margin-bottom: 1.8rem;
+}
+
+article ul,
+article ol {
+    padding-left: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+}
+
+article li br,
+article ul>br {
+    display: none !important;
+}
+
+article li {
+    list-style-position: outside !important;
+    line-height: 1.6 !important;
+    margin-bottom: 0.5rem !important;
+    color: inherit;
+}
+
+article li * {
+    margin: 0 !important;
+    display: inline !important;
+}
+
+/* Barra Lateral */
+.share-bar {
+    position: sticky;
+    top: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+}
+
+.share-link {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-decoration: none;
     transition: all 0.3s ease;
+}
+
+.share-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    color: #fff;
+}
+
+.bg-facebook {
+    background-color: #1877f2;
+}
+
+.bg-twitter {
+    background-color: #000;
+}
+
+.bg-whatsapp {
+    background-color: #25d366;
+}
+
+/* Tarjetas Veritas */
+.check-card {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.07);
+    margin-bottom: 3rem;
+}
+
+.check-header {
+    padding: 2rem;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    color: #fff !important;
+    text-align: center;
+    border: none !important;
+}
+
+.check-header.check-verdadero {
+    background-color: var(--true-green) !important;
+}
+
+.check-header.check-falso {
+    background-color: var(--false-red) !important;
+}
+
+.check-header.check-engañoso,
+.check-header.check-enganioso {
+    background-color: var(--enganioso-orange) !important;
+}
+
+/* =======================================================
+   8. FOOTER Y AJUSTES MÓVILES GLOBALES
+   ======================================================= */
+footer {
+    background: #000;
+    color: #fff;
+    padding: 5rem 0 2rem;
+    margin-top: 5rem;
+}
+
+footer h5 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+footer a {
+    color: #999;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 0.9rem;
+}
+
+footer a:hover {
+    color: #fff;
+}
+
+@media (max-width: 991px) {
+    .article-title {
+        font-size: 2.5rem;
+    }
+
+    .share-bar {
+        flex-direction: row;
+        position: relative;
+        top: 0;
+        justify-content: center;
+        margin-bottom: 3rem;
+    }
+
+    .share-bar span {
+        display: none;
+    }
 }
