@@ -3,18 +3,31 @@ require_once "../config/Conexion.php";
 require_once "../modelos/Noticia.php";
 
 $noticia = new Noticia();
-$id = isset($_GET["id"]) ? $_GET["id"] : "";
 
-// Obtenemos los datos (tu modelo ya devuelve un array asociativo)
+// 1. Limpiamos el ID
+$id_crudo = isset($_GET["id"]) ? $_GET["id"] : "";
+$id = (int) $id_crudo;
+
+// 2. Obtenemos los datos (Sabemos que $reg es un ARRAY)
 $reg = $noticia->mostrar($id);
 
-// Redirección si no existe la noticia
-if (!$reg) { 
+// 3. El escudo protector (Usamos empty para comprobar si el array vino vacío)
+if (empty($reg)) { 
     header("Location: index.php"); 
     exit(); 
 }
 
-// INCLUIMOS EL HEADER GLOBAL (Esto trae el CSS, el <head> y el <nav>)
+// 4. VARIABLES PARA COMPARTIR 
+$protocolo = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
+$servidor = $_SERVER['HTTP_HOST'];
+
+// ¡ACÁ ESTABA EL CAMBIO! Usamos corchetes [''] en lugar de flechas ->
+$url_imagen_compartir = $protocolo . $servidor . "/public/files/noticias/" . $reg['imagen'];
+$titulo_compartir = $reg['titulo'];
+$resumen_compartir = $reg['resumen'];
+$url_actual = $protocolo . $servidor . $_SERVER['REQUEST_URI'];
+
+// INCLUIMOS EL HEADER GLOBAL
 include 'header.php';
 ?>
 
