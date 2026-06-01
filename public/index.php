@@ -23,7 +23,6 @@ function generarSlug($texto) {
 
 
 include 'header.php';
-// ESTO ES UNA PRUEBA DE VIAJE EN EL TIEMPO y guardá el archivo (Ctrl + S).
 ?>
 
 <main class="container" style="min-height: 65vh;">
