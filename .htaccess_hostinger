@@ -1,19 +1,23 @@
-# Evitar ver listado de carpetas
 Options -Indexes
-# Asegurar que reconozca el index
-DirectoryIndex index.php
-
-# Soporte para tus imágenes avif
-AddType image/avif .avif
-AddType image/webp .webp
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /
 
-    # Si NO es public, NI admin, NI ajax, lo mandamos a public/
-    RewriteCond %{REQUEST_URI} !^/public/ [NC]
-    RewriteCond %{REQUEST_URI} !^/admin/ [NC]
-    RewriteCond %{REQUEST_URI} !^/ajax/ [NC]
+    # Redirige /index.php o /public/index.php a la raíz visible
+    RewriteCond %{THE_REQUEST} \s/+((public/)?index\.php)[\s?] [NC]
+    RewriteRule ^(public/)?index\.php$ / [R=301,L]
+
+    # 1. Si la URL ya apunta a public/, frena acá para evitar bucles
+    RewriteRule ^public/ - [L]
+
+    # 2. Regla para Slugs de los artículos
+    RewriteRule ^(?:public/)?articulo/([0-9]+)-.*$ public/articulo.php?id=$1 [L,QSA,NC]
+
+    # 3. Inicio
+    RewriteRule ^$ public/index.php [L]
+
+    # 4. Todo lo demás que no exista, mandalo a public/
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
