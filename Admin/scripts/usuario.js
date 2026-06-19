@@ -13,12 +13,11 @@ function init() {
 // Función limpiar campos
 function limpiar() {
     $("#nombre").val("");
-    $("#apellido").val("");
+    // Eliminamos el campo apellido que ya no está en tu HTML
     $("#login").val("");
     $("#clave").val("");
     $("#idusuario").val("");
 }
-
 // Función mostrar formulario
 function mostrarform(flag) {
     limpiar();
@@ -89,6 +88,7 @@ function guardaryeditar(e) {
     var formData = new FormData($("#formulario")[0]);
 
     $.ajax({
+        // CORRECCIÓN: Usamos la ruta relativa directa igual que en las demás funciones
         url: "../ajax/usuario.php?op=guardaryeditar",
         type: "POST",
         data: formData,
@@ -96,7 +96,6 @@ function guardaryeditar(e) {
         processData: false,
 
         success: function(datos) {
-            // Reemplazamos alert() por SweetAlert2
             Swal.fire({
                 icon: 'success',
                 title: '¡Operación Exitosa!',
@@ -106,9 +105,16 @@ function guardaryeditar(e) {
             });
             mostrarform(false);
             tabla.ajax.reload();
+        },
+        error: function() {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Hubo un problema de comunicación con el servidor.'
+            });
+            $("#btnGuardar").prop("disabled", false);
         }
     });
-    limpiar();
 }
 
 function mostrar(idusuario) {
@@ -117,7 +123,7 @@ function mostrar(idusuario) {
         mostrarform(true);
 
         $("#nombre").val(data.nombre);
-        $("#apellido").val(data.apellido);
+        // Eliminamos el campo apellido que generaba conflicto
         $("#login").val(data.login);
         $("#tipo").val(data.tipo);
         $("#idusuario").val(data.idusuario);

@@ -2,20 +2,15 @@
     <div class="container text-center text-md-start">
         <div class="row">
             <div class="col-lg-6 mb-5">
-
-                <a class="navbar-brand" href="index.php">
-                    <img src="assets/img/logoblanco.png"
+                <a class="navbar-brand" href="<?php echo defined('RUTA_BASE') ? RUTA_BASE : ''; ?>index.php">
+                    <img src="<?php echo defined('RUTA_BASE') ? RUTA_BASE : ''; ?>assets/img/logoblanco.png"
                         alt="Logo Ipunto"
                         class="img-fluid"
                         style="max-height: 40px; width: auto;">
                 </a>
                 <p class="text-secondary pe-lg-5">Todo lo importante del día, en un solo lugar.</p>
-                <!--                 <div class="d-flex gap-3 mt-4 justify-content-center justify-content-md-start">
-                    <a href="#"><i class="fa-brands fa-x-twitter fs-4"></i></a>
-                    <a href="#"><i class="fa-brands fa-instagram fs-4"></i></a>
-                    <a href="#"><i class="fa-brands fa-linkedin fs-4"></i></a>
-                </div> -->
             </div>
+            
             <div class="col-lg-3 col-md-6 mb-4">
                 <h5>Metodología</h5>
                 <ul class="list-unstyled">
@@ -24,64 +19,99 @@
                     <li><a href="#">Transparencia</a></li>
                 </ul>
             </div>
+            
             <div class="col-lg-3 col-md-6 mb-4 text-center bg-dark p-4 rounded-4">
-                <h5>Newsletter</h5>
-                <p class="small text-secondary">La verdad, cada lunes en tu inbox.</p>
-
-                <form id="frmNewsletter" class="input-group">
-                    <input type="email" class="form-control bg-transparent border-secondary text-white" id="emailNewsletter" name="email" placeholder="Tu email" required>
-                    <button type="submit" class="btn btn-primary" id="btnSuscripcion">
-                        <i class="fa-solid fa-paper-plane"></i>
-                    </button>
+                <h5 class="mb-3 text-white">Newsletter</h5>
+                <form id="frmNewsletter">
+                    <div class="input-group">
+                        <input type="email" id="emailNewsletter" class="form-control" placeholder="Tu correo electrónico" required>
+                        <button class="btn btn-outline-light" type="submit" id="btnSuscripcion">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
-        <div class="border-top border-secondary mt-5 pt-4 text-center">
-            <p class="small text-secondary">© 2026 Ipunto. Prohibida la reproducción sin citar la fuente.</p>
+        
+        <hr class="border-secondary my-4">
+        
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                <span class="text-secondary small">&copy; 2026 Ipunto. Todos los derechos reservados.</span>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+                <ul class="list-inline mb-0 small">
+                    <li class="list-inline-item"><a href="#" class="text-secondary text-decoration-none">Privacidad</a></li>
+                    <li class="list-inline-item"><a href="#" class="text-secondary text-decoration-none">Términos</a></li>
+                    <li class="list-inline-item"><a href="#" class="text-secondary text-decoration-none">Contacto</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- SCRIPTS OBLIGATORIOS -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <?php
-    $es_local = ($_SERVER['HTTP_HOST'] == 'localhost' || $_SERVER['HTTP_HOST'] == '127.0.0.1');
-    $ruta_base = $es_local ? '/ipunto/' : '/'; 
-    ?>
-    
-    <script>
-    // 1. Guardamos la ruta base en una constante de JS
-    const RUTA_BASE = '<?php echo $ruta_base; ?>';
+<script>
+    // USAMOS LA CONSTANTE GLOBAL QUE DEFINISTE EN GLOBAL.PHP
+    // Si por alguna razón no está definida en la vista actual, usa una ruta vacía por defecto
+    const RUTA_BASE = '<?php echo defined("RUTA_BASE") ? RUTA_BASE : ""; ?>';
 
     $(document).ready(function() {
         $("#frmNewsletter").on('submit', function(e) {
-            e.preventDefault(); 
-            
+            e.preventDefault();
+
             let email = $("#emailNewsletter").val();
             let btn = $("#btnSuscripcion");
 
-            btn.prop("disabled", true).html('<i class="fa-solid fa-spinner fa-spin"></i>');
+            btn.prop("disabled", true).html('<i class=\"fa-solid fa-spinner fa-spin\"></i>');
 
-            // 2. Usamos la RUTA_BASE acá. Así funciona impecable en local y en Hostinger
-            $.post(RUTA_BASE + "ajax/suscriptor.php?op=guardar", {email: email}, function(data) {
-                
-                btn.prop("disabled", false).html('<i class="fa-solid fa-paper-plane"></i>');
-                
+            // URL dinámica absoluta
+            $.post(RUTA_BASE + "ajax/suscriptor.php?op=guardar", {
+                email: email
+            }, function(data) {
+
+                btn.prop("disabled", false).html('<i class=\"fa-solid fa-paper-plane\"></i>');
+
                 data = $.trim(data);
                 if (data === "ok") {
-                    Swal.fire({ icon: 'success', title: '¡Suscrito!', text: 'Gracias por sumarte.', confirmButtonColor: '#c93b28' });
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Suscrito!',
+                        text: 'Gracias por sumarte.',
+                        confirmButtonColor: '#c93b28'
+                    });
                     $("#emailNewsletter").val("");
                 } else if (data === "existe") {
-                    Swal.fire({ icon: 'info', title: 'Ya registrado', text: 'Este mail ya es parte del club.' });
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Ya registrado',
+                        text: 'Este mail ya está en nuestra lista.',
+                        confirmButtonColor: '#c93b28'
+                    });
+                    $("#emailNewsletter").val("");
                 } else {
-                    Swal.fire({ icon: 'error', title: 'Error', text: 'No se pudo guardar.' });
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'No se pudo procesar la suscripción.',
+                        confirmButtonColor: '#c93b28'
+                    });
                 }
+            }).fail(function() {
+                btn.prop("disabled", false).html('<i class=\"fa-solid fa-paper-plane\"></i>');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de Red',
+                    text: 'No se pudo conectar con el servidor.',
+                    confirmButtonColor: '#c93b28'
+                });
             });
         });
     });
-    </script>
+</script>
 </body>
-
 </html>

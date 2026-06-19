@@ -67,6 +67,7 @@ if (isset($_SESSION["idusuario"])) {
             box-shadow: 0 4px 12px rgba(13, 110, 253, 0.2);
         }
     </style>
+
 </head>
 
 <body>

@@ -24,12 +24,14 @@
     --true-green: #2ecc71;
     --false-red: #e74c3c;
     --enganioso-orange: #f39c12;
+    --ipunto-red: #c93b28;
 }
 
 body {
     font-family: 'Metropolis', Arial, sans-serif;
     background-color: #fff;
     color: var(--primary-dark);
+    -webkit-font-smoothing: antialiased;
 }
 
 .container {
@@ -37,7 +39,7 @@ body {
 }
 
 /* =======================================================
-   3. NAVBAR Y LOGO
+   3. NAVBAR Y LOGO (Unificado con Metropolis)
    ======================================================= */
 .navbar {
     padding: 1.5rem 0;
@@ -61,20 +63,20 @@ body {
 .logo-i-btn {
     background-color: var(--accent-blue);
     color: #ffffff;
-    font-family: 'Inter', sans-serif;
-    font-weight: 800;
+    font-family: 'Metropolis', sans-serif;
+    font-weight: 900;
     font-size: 1.8rem;
     padding: 2px 10px;
     border-radius: 6px;
-    margin-right: 1px;
+    margin-right: 2px;
 }
 
 .logo-text-punto {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.4rem;
+    font-family: 'Metropolis', sans-serif;
+    font-size: 2.2rem;
     font-weight: 900;
     color: var(--primary-dark);
-    letter-spacing: 1px;
+    letter-spacing: -1px;
 }
 
 .logo-dot-blue {
@@ -86,7 +88,7 @@ footer .logo-text-punto {
 }
 
 /* =======================================================
-   4. TÍTULOS DE SECCIÓN (Caja Roja)
+   4. TÍTULOS DE SECCIÓN (Caja Roja - Look Moderno)
    ======================================================= */
 .section-separator {
     display: flex;
@@ -95,12 +97,15 @@ footer .logo-text-punto {
 }
 
 .section-separator h2 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Metropolis', sans-serif;
     font-weight: 900;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
     margin: 0;
-    background-color: #c93b28;
+    background-color: var(--ipunto-red);
     color: #ffffff !important;
-    padding: 0.4rem 1.2rem;
+    padding: 0.5rem 1.4rem;
     border-radius: 4px 0 0 4px;
 }
 
@@ -108,27 +113,18 @@ footer .logo-text-punto {
     content: "";
     flex-grow: 1;
     height: 2px;
-    background-color: #c93b28;
+    background-color: var(--ipunto-red);
 }
 
 /* =======================================================
    5. NOTICIA PRINCIPAL & PUNTO DE VISTA (HERO ADAPTATIVO)
    ======================================================= */
-/* El contenedor ahora se amolda EXACTAMENTE a la altura natural de la foto */
-/* =======================================================
-   5. NOTICIA PRINCIPAL & PUNTO DE VISTA (HERO ADAPTATIVO)
-   ======================================================= */
-/* El contenedor base */
-/* =======================================================
-   5. NOTICIA PRINCIPAL & PUNTO DE VISTA (HERO ADAPTATIVO)
-   ======================================================= */
-/* El contenedor base de la imagen */
 .hero-img-container {
     position: relative; 
     width: 100%;
-    height: 100%; /* Ocupa el 100% de la altura de la fila */
+    height: 100%; 
     display: flex;
-    align-items: stretch; /* Estira la imagen al contenedor */
+    align-items: stretch; 
     justify-content: center;
     overflow: hidden;
     background-color: transparent; 
@@ -139,33 +135,32 @@ footer .logo-text-punto {
     display: none !important;
 }
 
-/* La foto real manda: ahora usa cover para garantizar que tape el 100% del alto y ancho de su columna */
+/* VOLVEMOS A LA REGLA DE ORO: COVER ABSOLUTO PARA LA IMAGEN PRINCIPAL */
 .hero-img {
     width: 100% !important;
     height: 100% !important;
     display: block;
-    object-fit: cover; /* Recorta milimétricamente los excesos para que la base coincida con el texto */
+    object-fit: cover !important; 
     object-position: center center;
     border-radius: 12px 12px 0 0 !important;
 }
 
-/* El contenedor del texto: Aseguramos fondo blanco absoluto y altura completa */
 .hero-text-container {
     background-color: #ffffff !important;
-    height: 100%; /* Obliga a la caja blanca a medir exactamente lo mismo que la columna de la foto */
+    height: 100%; 
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centra el texto verticalmente de forma elegante */
+    justify-content: center; 
     border-radius: 0 0 12px 12px !important;
 }
 
-/* Título Principal */
 .main-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.6rem;
-    line-height: 1.25;
-    margin-bottom: 1rem;
+    font-family: 'Metropolis', sans-serif;
     font-weight: 900;
+    font-size: 1.8rem;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
@@ -173,77 +168,70 @@ footer .logo-text-punto {
     text-overflow: ellipsis;
 }
 
-/* Ajustes para Tablets */
-@media (min-width: 768px) and (max-width: 991px) {
-    .main-title {
-        font-size: 2.2rem;
-    }
-}
-
-/* Ajustes Profesionales para PC (Pantallas Grandes) */
 @media (min-width: 992px) {
-    .hero-img-container {
+    .hero-img-container, .hero-img {
         border-radius: 12px 0 0 12px !important; 
     }
-
-    .hero-img {
-        border-radius: 12px 0 0 12px !important; 
-    }
-
     .hero-text-container {
         border-radius: 0 12px 12px 0 !important; 
         padding: 2.5rem !important; 
     }
-
     .main-title {
-        font-size: 2.4rem; 
-        line-height: 1.2;
-        margin-bottom: 1rem;
-        min-height: auto; 
+        font-size: 2.5rem; 
     }
 }
 
-/* =======================================================
-   6. GRILLA DE NOTICIAS (Secundarias)
+
+ /* =======================================================
+   6. GRILLA DE NOTICIAS (Secundarias) - CORREGIDO PARA PLACAS ENTERAS
    ======================================================= */
 article.card-news {
     background-color: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.04);
     border-radius: 16px;
-    padding: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    padding: 14px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 article.card-news:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-6px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
 }
 
 article.card-news .card-body {
-    padding: 12px 8px 0 8px;
+    padding: 14px 4px 0 4px;
 }
 
+/* Al quitar el aspect-ratio y el cover, la placa se adapta a su alto natural sin recortarse */
 .card-news img:not(.hero-img) {
-    border-radius: 12px;
+    border-radius: 10px;
     width: 100%;
     height: auto;
-    aspect-ratio: 16/9;
-    object-fit: cover;
-    object-position: center top;
+    display: block;
 }
 
 .card-news .card-title {
+    font-family: 'Metropolis', sans-serif;
+    font-weight: 900;
+    font-size: 1.2rem;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    color: var(--primary-dark);
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    min-height: 3.6em;
-    line-height: 1.2;
+    min-height: 3.9em;
+    margin-top: 10px; /* Espacio prudencial debajo de la foto */
 }
 
 .card-news .card-text,
 .hero-section .lead {
+    font-family: 'Metropolis', sans-serif;
+    font-weight: normal;
+    font-size: 0.95rem;
+    line-height: 1.5;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -251,201 +239,145 @@ article.card-news .card-body {
     min-height: 3em;
 }
 
-/* Sellos Veritas */
-.sello-veritas {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 50px;
-    font-size: 0.7rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 1rem;
-}
-
-.check-verdadero {
-    background: #dcfce7;
-    color: #15803d;
-    border: 1px solid #bbf7d0;
-}
-
-.check-falso {
-    background: #fee2e2;
-    color: #b91c1c;
-    border: 1px solid #fecaca;
-}
-
-.check-opinión,
-.check-opinion {
-    background: #e0e7ff;
-    color: #3730a3;
-    border: 1px solid #c7d2fe;
-}
-
 /* Resaltado de Opinión (Grilla) */
 article.card-opinion {
-    border-top: 3px solid #c93b28 !important;
-    box-shadow: 0 8px 24px rgba(201, 59, 40, 0.08) !important;
-    transition: all 0.3s ease;
+    border-top: 4px solid var(--ipunto-red) !important;
+    box-shadow: 0 8px 24px rgba(201, 59, 40, 0.05) !important;
 }
 
 article.card-opinion:hover {
-    box-shadow: 0 15px 32px rgba(201, 59, 40, 0.15) !important;
-    transform: translateY(-8px);
+    box-shadow: 0 15px 32px rgba(201, 59, 40, 0.12) !important;
 }
-
-.card-opinion:hover img:not(.hero-img) {
-    transform: scale(1.1);
-    transition: transform 0.3s ease;
-}
-
 /* =======================================================
    7. ARTÍCULO INTERNO (articulo.php)
    ======================================================= */
 .category-badge {
+    font-family: 'Metropolis', sans-serif;
     font-size: 0.75rem;
-    font-weight: 800;
+    font-weight: 900;
     letter-spacing: 2px;
-    color: #0056b3;
+    color: var(--accent-blue);
     text-transform: uppercase;
     margin-bottom: 1rem;
     display: block;
 }
 
 .article-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 3.5rem;
+    font-family: 'Metropolis', sans-serif;
+    font-size: 3rem;
     font-weight: 900;
-    line-height: 1.1;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
     margin-bottom: 2rem;
 }
 
-.article-resumen {
-    font-size: 1.3rem;
-    color: #4a5568;
-    font-weight: 400;
-    line-height: 1.6;
-    border-left: 4px solid #c93b28;
-    padding-left: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.featured-image {
-    border-radius: 24px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-    margin-bottom: 3.5rem;
-    width: 100%;
-}
-
-.article-content {
-    font-size: 1.2rem;
-    color: #2d3748;
+.article-container {
     max-width: 760px;
     margin: 0 auto;
-    line-height: 1.8;
-    overflow-x: hidden;
 }
 
-.article-content p {
-    margin-bottom: 1.8rem;
-}
-
-article ul,
-article ol {
-    padding-left: 1.5rem !important;
-    margin-bottom: 1.5rem !important;
-}
-
-article li br,
-article ul>br {
-    display: none !important;
-}
-
-article li {
-    list-style-position: outside !important;
-    line-height: 1.6 !important;
-    margin-bottom: 0.5rem !important;
-    color: inherit;
-}
-
-article li * {
-    margin: 0 !important;
-    display: inline !important;
-}
-
-/* Barra Lateral */
-.share-bar {
-    position: sticky;
-    top: 120px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    align-items: center;
-}
-
-.share-link {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.share-link:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    color: #fff;
-}
-
-.bg-facebook {
-    background-color: #1877f2;
-}
-
-.bg-twitter {
-    background-color: #000;
-}
-
-.bg-whatsapp {
-    background-color: #25d366;
-}
-
-/* Tarjetas Veritas */
-.check-card {
-    border: none;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.07);
-    margin-bottom: 3rem;
-}
-
-.check-header {
-    padding: 2rem;
-    font-family: 'Playfair Display', serif;
+.article-hero-title {
+    font-family: 'Metropolis', sans-serif;
     font-weight: 900;
-    color: #fff !important;
-    text-align: center;
-    border: none !important;
+    font-size: clamp(2rem, 4vw, 3.2rem); 
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: var(--primary-dark);
 }
 
-.check-header.check-verdadero {
-    background-color: var(--true-green) !important;
+.article-lead {
+    font-family: 'Metropolis', sans-serif;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: #4a4a4a;
+    font-weight: normal;
 }
 
-.check-header.check-falso {
-    background-color: var(--false-red) !important;
+.article-meta {
+    font-family: 'Metropolis', sans-serif;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #888;
+    border-top: 1px solid #eaeaea;
+    border-bottom: 1px solid #eaeaea;
 }
 
-.check-header.check-engañoso,
-.check-header.check-enganioso {
-    background-color: var(--enganioso-orange) !important;
+.article-meta strong {
+    color: var(--primary-dark);
+    font-weight: 900;
+}
+
+.article-hero-image, 
+.seccion-dinamica-img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    object-fit: cover;
+}
+
+.article-body, 
+.seccion-dinamica .article-content {
+    font-family: 'Metropolis', sans-serif;
+    font-weight: normal;
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #2b2b2b;
+}
+
+.article-body br, 
+.seccion-dinamica .article-content br {
+    content: "";
+    display: block;
+    margin-top: 1.2rem;
+}
+
+/* --- SECCIONES DINÁMICAS --- */
+.seccion-dinamica {
+    margin-top: 3.5rem;
+}
+
+.seccion-contenido-lateral {
+    border-left: 4px solid var(--ipunto-red); 
+    padding-left: 1.5rem;           
+    margin-bottom: 2rem;
+}
+
+.seccion-categoria {
+    display: block;
+    color: var(--ipunto-red);
+    font-family: 'Metropolis', sans-serif;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+}
+
+.seccion-subtitulo {
+    font-family: 'Metropolis', sans-serif;
+    font-weight: 900;
+    font-size: 1.8rem;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: #111;
+    margin-bottom: 1.5rem;
+}
+
+.seccion-img-container {
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.seccion-divisor {
+    border: none;
+    border-bottom: 1px solid #e1e1e1; 
+    margin: 0 0 3.5rem 0;
 }
 
 /* =======================================================
-   8. FOOTER Y AJUSTES MÓVILES GLOBALES
+   8. FOOTER Y AJUSTES EXTRA
    ======================================================= */
 footer {
     background: #000;
@@ -455,12 +387,16 @@ footer {
 }
 
 footer h5 {
-    font-family: 'Playfair Display', serif;
-    font-weight: 700;
+    font-family: 'Metropolis', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
     margin-bottom: 1.5rem;
 }
 
 footer a {
+    font-family: 'Metropolis', sans-serif;
     color: #999;
     text-decoration: none;
     transition: 0.3s;
@@ -471,20 +407,107 @@ footer a:hover {
     color: #fff;
 }
 
+.progress-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: transparent;
+    z-index: 9999;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--ipunto-red);
+    width: 0%;
+    transition: width 0.1s ease-out;
+}
+
+/* =======================================================
+   REPARACIÓN CONTROLADA: LÍNEAS ROJAS Y FAVICON EDITORIAL
+   ======================================================= */
+
+.seccion-divisor {
+    border: none;
+    border-bottom: 1px solid var(--ipunto-red) !important;
+    opacity: 0.4; 
+    margin: 0 0 3.5rem 0;
+}
+
+.seccion-divisor-con-icono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0 4rem 0; 
+    width: 100%;
+}
+
+.seccion-divisor-con-icono::before,
+.seccion-divisor-con-icono::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid var(--ipunto-red);
+    opacity: 0.4;
+}
+
+.seccion-divisor-con-icono::before {
+    margin-right: 25px;
+}
+
+.seccion-divisor-con-icono::after {
+    margin-left: 25px;
+}
+
+.seccion-divisor-con-icono img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    display: block;
+}
+
+/* =======================================================
+   9. BOTONES SHARE FLOTANTES
+   ======================================================= */
+.social-share-floating {
+    position: fixed;
+    left: calc(50% - 460px); 
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.social-share-floating a {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white !important;
+    font-size: 1.4rem;
+    text-decoration: none;
+    transition: transform 0.3s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.social-share-floating a:hover { 
+    transform: scale(1.1); 
+}
+
+.btn-share-wsp { 
+    background-color: #25d366; 
+}
+
+.btn-share-ig { 
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); 
+}
+
 @media (max-width: 991px) {
-    .article-title {
-        font-size: 2.5rem;
-    }
-
-    .share-bar {
-        flex-direction: row;
-        position: relative;
-        top: 0;
-        justify-content: center;
-        margin-bottom: 3rem;
-    }
-
-    .share-bar span {
-        display: none;
+    .social-share-floating {
+        display: none !important;
     }
 }

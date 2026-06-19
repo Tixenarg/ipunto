@@ -21,7 +21,6 @@ function generarSlug($texto) {
     return $texto;
 }
 
-
 include 'header.php';
 ?>
 
@@ -45,12 +44,12 @@ include 'header.php';
                             <div class="row g-0">
                                 <div class="col-lg-7">
                                     <div class="hero-img-container">
-                                        <img src="files/noticias/<?php echo $reg->imagen; ?>" class="hero-img" alt="...">
+                                        <img src="<?php echo RUTA_BASE; ?>files/noticias/<?php echo $reg->imagen; ?>" class="hero-img" alt="...">
                                     </div>
                                 </div>
                                 <div class="col-lg-5 p-4 p-md-5 d-flex flex-column justify-content-center bg-white hero-text-container">
                                     
-                                    <a href="articulo/<?php echo $reg->idnoticia . '-' . generarSlug($reg->titulo); ?>" class="text-decoration-none text-dark stretched-link">
+                                    <a href="<?php echo RUTA_BASE; ?>articulo/<?php echo $reg->idnoticia . '-' . generarSlug($reg->titulo); ?>" class="text-decoration-none text-dark stretched-link">
                                         <h1 class="main-title text-dark fw-bold mb-3"><?php echo $reg->titulo; ?></h1>
                                     </a>
                                     <p class="lead text-muted d-none d-sm-block mb-4"><?php echo $reg->resumen; ?></p>
@@ -79,12 +78,11 @@ include 'header.php';
                                 <article class="card h-100 card-news position-relative">
                                     <div class="position-relative mb-3">
                                         <div style="height: 200px; overflow: hidden; border-radius: 12px;">
-                                            <img src="files/noticias/<?php echo $reg->imagen; ?>" class="w-100 h-100" style="object-fit: cover;" alt="...">
+                                            <img src="<?php echo RUTA_BASE; ?>files/noticias/<?php echo $reg->imagen; ?>" class="w-100 h-100" style="object-fit: cover;" alt="...">
                                         </div>
                                     </div>
                                     <div class="card-body p-0">
-                                        <a href="articulo/<?php echo $reg->idnoticia . '-' . generarSlug($reg->titulo); ?>" class="text-decoration-none text-dark stretched-link">
-                                        <!-- <a href="articulo.php?id=<?php echo $reg->idnoticia; ?>" class="text-decoration-none text-dark stretched-link"> -->
+                                        <a href="<?php echo RUTA_BASE; ?>articulo/<?php echo $reg->idnoticia . '-' . generarSlug($reg->titulo); ?>" class="text-decoration-none text-dark stretched-link">
                                             <h5 class="card-title" style="font-size: 1.2rem;"><?php echo $reg->titulo; ?></h5>
                                         </a>
 
@@ -109,20 +107,17 @@ include 'header.php';
 
 
                         <div class="col-12 mb-5">
-                        <!-- CLAVE: Cambiamos 'card-news' por 'card-opinion' para que mantenga sus estilos visuales propios -->
                         <div class="card hero-section border-0 shadow-lg position-relative card-opinion overflow-hidden">
-                            <!-- Estiramos las columnas para alinear las bases milimétricamente en PC -->
                             <div class="row g-0 align-items-lg-stretch">
                                 <div class="col-lg-7 d-flex">
-                                    <div class="hero-img-container w-100" style="--bg-image: url('files/noticias/<?php echo $opinion->imagen; ?>');">
-                                        <img src="files/noticias/<?php echo $opinion->imagen; ?>" class="hero-img" alt="...">
+                                    <div class="hero-img-container w-100" style="--bg-image: url('<?php echo RUTA_BASE; ?>files/noticias/<?php echo $opinion->imagen; ?>');">
+                                        <img src="<?php echo RUTA_BASE; ?>files/noticias/<?php echo $opinion->imagen; ?>" class="hero-img" alt="...">
                                     </div>
                                 </div>
                                 
                                 <div class="col-lg-5 p-4 p-md-5 d-flex flex-column justify-content-center bg-white hero-text-container">
 
-                                    <a href="articulo/<?php echo $opinion->idnoticia . '-' . generarSlug($opinion->titulo); ?>" class="text-decoration-none text-dark stretched-link">
-                                    <!-- <a href="articulo.php?id=<?php echo $opinion->idnoticia; ?>" class="text-decoration-none text-dark stretched-link"> -->
+                                    <a href="<?php echo RUTA_BASE; ?>articulo/<?php echo $opinion->idnoticia . '-' . generarSlug($opinion->titulo); ?>" class="text-decoration-none text-dark stretched-link">
                                         <h1 class="main-title text-dark fw-bold mb-3"><?php echo $opinion->titulo; ?></h1>
                                     </a>
 
