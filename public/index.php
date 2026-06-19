@@ -7,7 +7,8 @@ $listado = $noticia->listarUltimasNoticias();
 $rsptaOpinion = $noticia->listarUltimaOpinion();
 $opinion = $rsptaOpinion->fetch_object();
 
-function generarSlug($texto) {
+function generarSlug($texto)
+{
     // Reemplaza caracteres especiales
     $texto = iconv('UTF-8', 'ASCII//TRANSLIT', $texto);
     // Convierte a minúsculas
@@ -48,7 +49,7 @@ include 'header.php';
                                     </div>
                                 </div>
                                 <div class="col-lg-5 p-4 p-md-5 d-flex flex-column justify-content-center bg-white hero-text-container">
-                                    
+
                                     <a href="<?php echo RUTA_BASE; ?>articulo/<?php echo $reg->idnoticia . '-' . generarSlug($reg->titulo); ?>" class="text-decoration-none text-dark stretched-link">
                                         <h1 class="main-title text-dark fw-bold mb-3"><?php echo $reg->titulo; ?></h1>
                                     </a>
@@ -77,7 +78,10 @@ include 'header.php';
                             <div class="col-lg-4 col-md-6 mb-4">
                                 <article class="card h-100 card-news position-relative">
                                     <div class="position-relative mb-3">
-                                        <div style="height: 200px; overflow: hidden; border-radius: 12px;">
+                                        <!--                                         <div style="height: 200px; overflow: hidden; border-radius: 12px;">
+                                            <img src="<?php echo RUTA_BASE; ?>files/noticias/<?php echo $reg->imagen; ?>" class="w-100 h-100" style="object-fit: cover;" alt="...">
+                                        </div> -->
+                                        <div style="aspect-ratio: 3/2; overflow: hidden; border-radius: 12px;">
                                             <img src="<?php echo RUTA_BASE; ?>files/noticias/<?php echo $reg->imagen; ?>" class="w-100 h-100" style="object-fit: cover;" alt="...">
                                         </div>
                                     </div>
@@ -107,36 +111,36 @@ include 'header.php';
 
 
                         <div class="col-12 mb-5">
-                        <div class="card hero-section border-0 shadow-lg position-relative card-opinion overflow-hidden">
-                            <div class="row g-0 align-items-lg-stretch">
-                                <div class="col-lg-7 d-flex">
-                                    <div class="hero-img-container w-100" style="--bg-image: url('<?php echo RUTA_BASE; ?>files/noticias/<?php echo $opinion->imagen; ?>');">
-                                        <img src="<?php echo RUTA_BASE; ?>files/noticias/<?php echo $opinion->imagen; ?>" class="hero-img" alt="...">
+                            <div class="card hero-section border-0 shadow-lg position-relative card-opinion overflow-hidden">
+                                <div class="row g-0 align-items-lg-stretch">
+                                    <div class="col-lg-7 d-flex">
+                                        <div class="hero-img-container w-100" style="--bg-image: url('<?php echo RUTA_BASE; ?>files/noticias/<?php echo $opinion->imagen; ?>');">
+                                            <img src="<?php echo RUTA_BASE; ?>files/noticias/<?php echo $opinion->imagen; ?>" class="hero-img" alt="...">
+                                        </div>
                                     </div>
-                                </div>
-                                
-                                <div class="col-lg-5 p-4 p-md-5 d-flex flex-column justify-content-center bg-white hero-text-container">
 
-                                    <a href="<?php echo RUTA_BASE; ?>articulo/<?php echo $opinion->idnoticia . '-' . generarSlug($opinion->titulo); ?>" class="text-decoration-none text-dark stretched-link">
-                                        <h1 class="main-title text-dark fw-bold mb-3"><?php echo $opinion->titulo; ?></h1>
-                                    </a>
+                                    <div class="col-lg-5 p-4 p-md-5 d-flex flex-column justify-content-center bg-white hero-text-container">
 
-                                    <p class="lead text-muted d-none d-sm-block mb-4"><?php echo $opinion->resumen; ?></p>
+                                        <a href="<?php echo RUTA_BASE; ?>articulo/<?php echo $opinion->idnoticia . '-' . generarSlug($opinion->titulo); ?>" class="text-decoration-none text-dark stretched-link">
+                                            <h1 class="main-title text-dark fw-bold mb-3"><?php echo $opinion->titulo; ?></h1>
+                                        </a>
 
-                                    <div class="d-flex align-items-center mt-auto">
-                                        <div>
-                                            <h6 class="mb-0 fw-bold text-dark">Por <?php echo isset($opinion->autor) ? $opinion->autor : 'Redacción'; ?></h6>
-                                            <small class="text-muted">
-                                                <?php echo isset($opinion->fecha_publicacion) ? date("d M, Y", strtotime($opinion->fecha_publicacion)) : ''; ?>
-                                            </small>
+                                        <p class="lead text-muted d-none d-sm-block mb-4"><?php echo $opinion->resumen; ?></p>
+
+                                        <div class="d-flex align-items-center mt-auto">
+                                            <div>
+                                                <h6 class="mb-0 fw-bold text-dark">Por <?php echo isset($opinion->autor) ? $opinion->autor : 'Redacción'; ?></h6>
+                                                <small class="text-muted">
+                                                    <?php echo isset($opinion->fecha_publicacion) ? date("d M, Y", strtotime($opinion->fecha_publicacion)) : ''; ?>
+                                                </small>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                        
+
                     <?php endif; ?>
 
                 <?php else: ?>

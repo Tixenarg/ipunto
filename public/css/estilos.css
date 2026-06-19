@@ -204,10 +204,20 @@ article.card-news .card-body {
 }
 
 /* Al quitar el aspect-ratio y el cover, la placa se adapta a su alto natural sin recortarse */
+/* .card-news img:not(.hero-img) {
+    border-radius: 10px;
+    width: 100%;
+    height: auto;
+    display: block;
+} */
+
+/* Al usar aspect-ratio 3/2 (igual que las fotos originales), encajan perfecto sin recortes */
 .card-news img:not(.hero-img) {
     border-radius: 10px;
     width: 100%;
     height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
     display: block;
 }
 
@@ -469,7 +479,7 @@ footer a:hover {
 /* =======================================================
    9. BOTONES SHARE FLOTANTES
    ======================================================= */
-.social-share-floating {
+/* .social-share-floating {
     position: fixed;
     left: calc(50% - 460px); 
     top: 50%;
@@ -478,7 +488,7 @@ footer a:hover {
     display: flex;
     flex-direction: column;
     gap: 15px;
-}
+} */
 
 .social-share-floating a {
     width: 45px;

@@ -162,8 +162,8 @@ include 'header.php';
 
                         <a href="<?php echo $url_amigable; ?>" class="text-decoration-none text-dark d-flex flex-column h-100">
 
-                            <img src="<?php echo $ruta_base_dinamica; ?>files/noticias/<?php echo $relacionada->imagen; ?>" class="card-img-top" alt="<?php echo $relacionada->titulo; ?>" style="height: 200px; object-fit: cover;">
-
+                            <!-- <img src="<?php echo $ruta_base_dinamica; ?>files/noticias/<?php echo $relacionada->imagen; ?>" class="card-img-top" alt="<?php echo $relacionada->titulo; ?>" style="height: 200px; object-fit: cover;"> -->
+                            <img src="<?php echo $ruta_base_dinamica; ?>files/noticias/<?php echo $relacionada->imagen; ?>" class="card-img-top" alt="<?php echo $relacionada->titulo; ?>" style="aspect-ratio: 3/2; width: 100%; object-fit: cover;">
                             <div class="card-body d-flex flex-column p-4">
                                 <h5 class="card-title fw-bold mb-4" style="font-family: 'Metropolis', sans-serif; font-size: 1.15rem; line-height: 1.4;"><?php echo $relacionada->titulo; ?></h5>
 
@@ -199,7 +199,7 @@ include 'header.php';
     };
 </script>
 <div class="social-share-floating">
-<!--     <a href="https://wa.me/?text=<?php echo urlencode($titulo_compartir . ' - ' . $url_actual); ?>" target="_blank" class="btn-share-wsp">
+    <!--     <a href="https://wa.me/?text=<?php echo urlencode($titulo_compartir . ' - ' . $url_actual); ?>" target="_blank" class="btn-share-wsp">
         <i class="fa-brands fa-whatsapp"></i>
     </a> -->
     <a href="https://api.whatsapp.com/send?text=<?php echo urlencode($url_actual); ?>" class="btn-share-wsp" target="_blank">

@@ -7,7 +7,7 @@ $dominio = $_SERVER['HTTP_HOST'];
 
 // Si estás en localhost, le sumamos la carpeta del proyecto. Si estás en Hostinger, apunta a la raíz.
 if ($dominio == "localhost") {
-    define("RUTA_BASE", $protocolo . $dominio . "/ipuntov2.0/");
+    define("RUTA_BASE", $protocolo . $dominio . "/ipunto/");
 } else {
     define("RUTA_BASE", $protocolo . $dominio . "/"); 
 }
