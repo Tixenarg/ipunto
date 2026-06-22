@@ -73,8 +73,12 @@ if (isset($_SESSION["idusuario"])) {
 <body>
 
     <div class="login-card">
-        <div class="login-logo">
+        <!--         <div class="login-logo">
             <i class="fa-solid fa-shield-halved"></i>
+                      
+        </div> -->
+        <div class="login-logo text-center">
+            <img src="../admin/assets/img/logo.png" alt="Logo iPunto" style="max-width: 80px; height: auto;">
         </div>
         <h4 class="text-center fw-bold mb-4">Panel Administrativo</h4>
 
