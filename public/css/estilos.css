@@ -168,6 +168,15 @@ footer .logo-text-punto {
     text-overflow: ellipsis;
 }
 
+/* --- ESTE ES EL BLOQUE NUEVO QUE ASEGURA EL 3:2 EN CELULARES Y TABLETS --- */
+@media (max-width: 991px) {
+    .hero-img-container {
+        aspect-ratio: 3 / 2;
+        height: auto !important;
+    }
+}
+/* -------------------------------------------------------------------------- */
+
 @media (min-width: 992px) {
     .hero-img-container, .hero-img {
         border-radius: 12px 0 0 12px !important; 
@@ -322,11 +331,11 @@ article.card-opinion:hover {
 .seccion-dinamica-img {
     width: 100%;
     height: auto;
+    aspect-ratio: 3 / 2; /* <-- ACÁ TAMBIÉN AGREGAMOS EL 3:2 */
     border-radius: 8px;
     margin-bottom: 1.5rem;
     object-fit: cover;
 }
-
 .article-body, 
 .seccion-dinamica .article-content {
     font-family: 'Metropolis', sans-serif;
@@ -476,19 +485,7 @@ footer a:hover {
     display: block;
 }
 
-/* =======================================================
-   9. BOTONES SHARE FLOTANTES
-   ======================================================= */
-/* .social-share-floating {
-    position: fixed;
-    left: calc(50% - 460px); 
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-} */
+
 
 .social-share-floating a {
     width: 45px;

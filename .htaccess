@@ -4,31 +4,31 @@ Options -Indexes
     RewriteEngine On
 
     # =========================================================
-    # A. LIMPIEZA VISUAL (Lo que cambia en la barra del navegador)
+    # A. LIMPIEZA VISUAL (Lo que el usuario ve en el navegador)
     # =========================================================
 
-    # 1. Si el usuario pide /index.php o /public/index.php, lo mandamos a la raíz "/"
-    RewriteCond %{THE_REQUEST} \s/+((public/)?index\.php)[\s?] [NC]
-    RewriteRule ^ / [R=301,L]
+    # 1. Si entran escribiendo explícitamente /public/, se lo borramos de la URL
+    RewriteCond %{THE_REQUEST} \s/+(.*?/)?public/([^\s?]*) [NC]
+    RewriteRule ^ /%1%2 [R=301,L,NE]
 
-    # 2. ¡NUEVO! Si el usuario entra explícitamente a /public/algo, le borramos el "/public/"
-    RewriteCond %{THE_REQUEST} \s/+public/(\S*) [NC]
-    RewriteRule ^ /%1 [R=301,L]
+    # 2. Si escriben index.php explícitamente, lo limpiamos de la URL
+    RewriteCond %{THE_REQUEST} \s/+(.*?/)?index\.php[\s?] [NC]
+    RewriteRule ^ /%1 [R=301,L,NE]
 
     # =========================================================
-    # B. ENRUTAMIENTO INTERNO (Lo que pasa oculto en el servidor)
+    # B. ENRUTAMIENTO INTERNO (Oculto en el servidor)
     # =========================================================
 
-    # 3. FRENO: Si el servidor ya enrutó esto a public/ internamente, frenamos acá (Evita bucles)
+    # 3. FRENO: Si ya estamos procesando algo dentro de public/, frenamos acá (Evita bucles)
     RewriteRule ^public/ - [L]
 
-    # 4. Regla para Slugs de los artículos (Ya no hace falta atajar el public/ acá)
+    # 4. Tu regla personalizada para los Slugs de los artículos
     RewriteRule ^articulo/([0-9]+)-.*$ public/articulo.php?id=$1 [L,QSA,NC]
 
-    # 5. Inicio (Si la URL está vacía)
+    # 5. Si la URL está vacía (raíz del sitio), procesar discretamente public/index.php
     RewriteRule ^$ public/index.php [L]
 
-    # 6. Todo lo demás que no sea un archivo físico, mandalo a public/
+    # 6. Todo lo demás que NO sea un archivo o carpeta real, buscalo adentro de public/
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)$ public/$1 [L]

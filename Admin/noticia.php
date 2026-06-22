@@ -88,7 +88,7 @@ require_once "../config/Conexion.php";
                                         <div class="placeholder-content text-muted">
                                             <i class="fa-solid fa-cloud-arrow-up fa-3x mb-2 text-primary"></i>
                                             <p class="mb-0">Clic o arrastrar imagen aquí</p>
-                                            <small>(Obligatorio - Formato 16:9)</small>
+                                            <small>(Formato 3:2 - 1200x800)</small>
                                         </div>
                                         <input type="file" class="file-upload-input" name="imagen" id="imagen" accept="image/jpeg, image/png, image/webp">
                                         <input type="hidden" name="imagenactual" id="imagenactual">
