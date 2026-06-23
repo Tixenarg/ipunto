@@ -252,7 +252,9 @@ require_once "../config/Conexion.php";
         const RUTA_BASE = "<?php echo RUTA_BASE; ?>";
     </script>
 
-    <script type="text/javascript" src="scripts/noticia.js?v=13"></script>
+    <!-- <script type="text/javascript" src="scripts/noticia.js?v=13"></script> -->
+    <!--  <script type="text/javascript" src="scripts/noticia.js?v=<?php echo time(); ?>"></script> -->
+     <script type="text/javascript" src="scripts/noticia.js?v=<?php echo filemtime('scripts/noticia.js'); ?>"></script>
 
 
 

@@ -92,19 +92,43 @@ $(document).on("change", ".file-upload-input", function () {
 	var dropZone = $(this).closest(".drop-zone");
 	var preview = dropZone.find(".preview-img");
 	var placeholder = dropZone.find(".placeholder-content");
+	var col = $(this).closest(".col-md-4");
+	var btnQuitar = col.find(".btn-quitar-foto-seccion");
 
 	if (archivo) {
 		var reader = new FileReader();
 		reader.onload = function (e) {
 			preview.attr("src", e.target.result).fadeIn();
 			placeholder.hide();
+			if (btnQuitar.length) btnQuitar.show(); // Mostrar el botón de anular si se cargó una foto
 		};
 		reader.readAsDataURL(archivo);
 	} else {
 		preview.hide().attr("src", "");
 		placeholder.fadeIn();
+		if (btnQuitar.length) btnQuitar.hide();
 	}
 });
+
+// ==========================================
+// ACCIÓN PARA ANULAR FOTO EN SECCIONES (REQUERIMIENTO 2)
+// ==========================================
+function quitarFotoSeccion(boton) {
+	var col = $(boton).closest(".col-md-4");
+	var dropZone = col.find(".drop-zone");
+	var preview = dropZone.find(".preview-img");
+	var placeholder = dropZone.find(".placeholder-content");
+	var fileInput = dropZone.find(".file-upload-input");
+	var hiddenInput = col.find("input[name='imagenes_seccion_actuales[]']");
+
+	fileInput.val(""); // Resetea el selector de archivos
+	if (hiddenInput.length) {
+		hiddenInput.val(""); // Resetea el campo oculto de la BD para que guarde vacío
+	}
+	preview.hide().attr("src", "");
+	placeholder.fadeIn();
+	$(boton).hide(); // Esconde el botón de quitar foto
+}
 
 // ==========================================
 // FUNCIÓN DE BLOQUES DINÁMICOS REDISEÑADA (NIVEL DIOS)
@@ -148,11 +172,14 @@ function agregarSeccion() {
                             <div class="placeholder-content text-center text-muted p-2">
                                 <i class="fa fa-image mb-1" style="font-size: 1.4rem; color: #64748b;"></i>
                                 <span class="d-block fw-bold text-secondary" style="font-size: 0.75rem;">Subir imagen</span>
-                                <span class="text-muted d-block" style="font-size: 0.65rem;">(Obligatorio - Formato 3:2 - 1200x800)</span>
+                                <span class="text-muted d-block" style="font-size: 0.65rem;">(Opcional - Formato 3:2)</span>
                             </div>
                             <input type="file" class="file-upload-input" name="imagenes_seccion[]" accept="image/jpeg, image/png, image/webp" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; z-index: 2;">
                             <img src="" class="preview-img" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; display: none;">
                         </div>
+                        <button type="button" class="btn btn-sm btn-link text-danger p-0 mt-2 fw-bold btn-quitar-foto-seccion" onclick="quitarFotoSeccion(this)" style="font-size: 0.8rem; display: none; text-decoration: none;">
+                            <i class="fa-solid fa-image-slash me-1"></i> Quitar foto de sección
+                        </button>
                     </div>
                 </div>
             </div>
@@ -326,12 +353,15 @@ function mostrar(idnoticia) {
                                         <div class="placeholder-content text-center text-muted p-2" style="${tieneImagen ? "display:none;" : ""}">
                                             <i class="fa fa-image mb-1" style="font-size: 1.4rem; color: #64748b;"></i>
                                             <span class="d-block fw-bold text-secondary" style="font-size: 0.75rem;">Subir imagen</span>
-                                            <span class="text-muted d-block" style="font-size: 0.65rem;">Formato 3:2 - 1200x800</span>
+                                            <span class="text-muted d-block" style="font-size: 0.65rem;">Formato 3:2</span>
                                         </div>
                                         <input type="file" class="file-upload-input" name="imagenes_seccion[]" accept="image/jpeg, image/png, image/webp" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; z-index: 2;">
                                         <input type="hidden" name="imagenes_seccion_actuales[]" value="${seccion.imagen || ""}">
                                         <img src="${srcImagen}" class="preview-img" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; ${tieneImagen ? "display:block;" : "display:none;"}">
                                     </div>
+                                    <button type="button" class="btn btn-sm btn-link text-danger p-0 mt-2 fw-bold btn-quitar-foto-seccion" onclick="quitarFotoSeccion(this)" style="font-size: 0.8rem; ${tieneImagen ? "display: inline-block;" : "display: none;"} text-decoration: none;">
+                                        <i class="fa-solid fa-image-slash me-1"></i> Quitar foto de sección
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -401,6 +431,21 @@ function cambiarFiltro(nuevoFiltro) {
 var procesando_envio = false;
 function guardaryeditar(e) {
 	if (e) e.preventDefault();
+
+	// --- REQUERIMIENTO 1: VALIDACIÓN DE FOTO DE PORTADA OBLIGATORIA ---
+	var tieneNuevaImagen = $("#imagen")[0].files.length > 0;
+	var tieneImagenActual = $("#imagenactual").val().trim() !== "";
+
+	if (!tieneNuevaImagen && !tieneImagenActual) {
+		Swal.fire({
+			title: "¡Foto de Portada Obligatoria!",
+			text: "Por favor, selecciona una foto de portada principal. La noticia no puede ser guardada sin su imagen principal.",
+			icon: "warning",
+			confirmButtonText: "Entendido",
+		});
+		return; // Frena el proceso por completo
+	}
+	// ------------------------------------------------------------------
 
 	if (procesando_envio === true) return;
 
@@ -492,87 +537,263 @@ function activar(idnoticia) {
 	});
 }
 
+// ==========================================
+// MOTOR DE MAQUETACIÓN EN VIVO (ANTI-CACHÉ)
+// ==========================================
+// ==========================================
+// MOTOR DE MAQUETACIÓN EN VIVO (ESPEJO PÚBLICO)
+// ==========================================
+// ==========================================
+// MOTOR DE MAQUETACIÓN EN VIVO (ESPEJO PÚBLICO VERSIÓN EXACTA)
+// ==========================================
+// ==========================================
+// MOTOR DE MAQUETACIÓN EN VIVO (CON DIVISORES ROJOS)
+// ==========================================
+// ==========================================
+// MOTOR DE MAQUETACIÓN EN VIVO (CON FAVICON CUADRADO)
+// ==========================================
+function construirPrevisualizacionEnVivo() {
+	// 1. Recolectamos los datos de los inputs del formulario
+	var categoriaTexto = $("#idcategoria option:selected").text();
+	var volanta = categoriaTexto === "Seleccione Categoría" ? "GENERAL" : categoriaTexto;
+	var titulo = $("#titulo").val() || "Sin título cargado todavía";
+	var resumen = $("#resumen").val() || "";
+	var cuerpoPrincipal = $("#cuerpo").val() || "";
 
-        // ==========================================
-        // MOTOR DE MAQUETACIÓN EN VIVO (ANTI-CACHÉ)
-        // ==========================================
-        function construirPrevisualizacionEnVivo() {
-            // 1. Cabecera
-            var categoriaTexto = $("#idcategoria option:selected").text();
-            $("#preview-principal-categoria").text(categoriaTexto === "Seleccione Categoría" ? "GENERAL" : categoriaTexto);
-            $("#preview-principal-titulo").text($("#titulo").val() || "Sin título cargado todavía");
-            $("#preview-principal-resumen").text($("#resumen").val() || "");
-            $("#preview-principal-autor").text($("#autor").val() || "Redacción I.");
+	// 2. Procesamos la foto de portada de la noticia principal
+	var inputFotoPrincipal = document.getElementById("imagen");
+	var srcMuestra = $("#imagenmuestra").attr("src");
+	var srcPortada = "";
 
-            var cuerpoPrincipal = $("#cuerpo").val() || "";
-            $("#preview-principal-cuerpo").html(cuerpoPrincipal ? cuerpoPrincipal.replace(/\n/g, '<br>') : "<i>Sin cuerpo base redactado...</i>");
+	if (inputFotoPrincipal && inputFotoPrincipal.files && inputFotoPrincipal.files[0]) {
+		srcPortada = URL.createObjectURL(inputFotoPrincipal.files[0]);
+	} else if (srcMuestra && srcMuestra.trim() !== "") {
+		srcPortada = srcMuestra;
+	}
 
-            // 2. Foto portada (Arreglado para que no falle por CSS del dropzone)
-            var inputFotoPrincipal = document.getElementById('imagen');
-            var srcMuestra = $("#imagenmuestra").attr("src");
-
-            if (inputFotoPrincipal && inputFotoPrincipal.files && inputFotoPrincipal.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    $("#preview-principal-img").attr("src", e.target.result).show();
-                }
-                reader.readAsDataURL(inputFotoPrincipal.files[0]);
-            } else if (srcMuestra && srcMuestra.trim() !== "") {
-                $("#preview-principal-img").attr("src", srcMuestra).show();
-            } else {
-                // Si no hay foto de ninguna forma, escondemos todo
-                $("#preview-principal-img").hide().attr("src", "");
-            }
-
-            // 3. Bloques limpios sin basura
-            var contenedorDestino = $("#preview-contenedor-bloques");
-            contenedorDestino.empty();
-
-            $(".seccion-card").each(function(index, elemento) {
-                var bloque = $(elemento);
-                var volanta = bloque.find("input[name='categorias_seccion[]']").val() || "";
-                var subtitulo = bloque.find("input[name='subtitulos[]']").val() || "";
-                var cuerpoBloque = bloque.find("textarea[name='cuerpos_seccion[]']").val() || "";
-
-                var inputImgBloque = bloque.find(".file-upload-input")[0];
-                var srcMuestraBloque = bloque.find(".preview-img").attr("src");
-                var idImgUnica = "preview-img-bloque-" + index;
-
-                var htmlBloquePreview = `
-			${index > 0 ? '<hr style="border: 0; border-top: 1px solid #fca5a5; margin: 40px 0; opacity: 0.8;">' : ''}
-			<div class="row align-items-start mb-4">
-				<div class="col-md-8 col-lg-9 order-2 order-md-1">
-					<div style="border-left: 4px solid #da251d; padding-left: 20px; margin-bottom: 15px;">
-						${volanta ? '<span class="text-uppercase fw-bold d-block mb-2" style="color: #da251d; font-size: 0.85rem; letter-spacing: 0.5px;">' + volanta + '</span>' : ''}
-						${subtitulo ? '<h3 class="text-dark mb-3" style="font-weight: 900; font-size: 1.6rem; line-height: 1.3; letter-spacing: -0.5px;">' + subtitulo + '</h3>' : ''}
-						<div class="text-secondary" style="font-size: 1.05rem; line-height: 1.7; color: #333 !important;">
-							${cuerpoBloque.replace(/\n/g, '<br>')}
-						</div>
+	// 3. ARMAMOS EL CONTENEDOR ESPEJO
+	var htmlPreview = `
+		<style>
+			#modalPreview .modal-body {
+				--primary-dark: #1a1a1a;
+				--ipunto-red: #c93b28;
+				background-color: #ffffff !important;
+				color: var(--primary-dark) !important;
+				font-family: 'Metropolis', Arial, sans-serif;
+				padding: 3rem 1.5rem !important;
+				text-align: left !important;
+			}
+			#modalPreview .article-container {
+				max-width: 760px;
+				margin: 0 auto;
+			}
+			#modalPreview .article-hero-title {
+				font-family: 'Metropolis', sans-serif;
+				font-weight: 900;
+				font-size: 2.6rem; 
+				line-height: 1.15;
+				letter-spacing: -0.03em;
+				color: var(--primary-dark);
+			}
+			#modalPreview .article-lead {
+				font-family: 'Metropolis', sans-serif;
+				font-size: 1.25rem;
+				line-height: 1.6;
+				color: #4a4a4a;
+				font-weight: normal;
+				border-left: 4px solid var(--ipunto-red);
+				padding-left: 1.5rem;
+				margin-bottom: 1.5rem;
+			}
+			#modalPreview .article-meta {
+				font-family: 'Metropolis', sans-serif;
+				font-size: 0.85rem;
+				text-transform: uppercase;
+				letter-spacing: 1px;
+				color: #888;
+				border-top: 1px solid #eaeaea;
+				border-bottom: 1px solid #eaeaea;
+				padding: 0.8rem 0;
+				margin-bottom: 2rem;
+			}
+			#modalPreview .article-hero-image, 
+			#modalPreview .seccion-dinamica-img {
+				width: 100%;
+				height: auto;
+				aspect-ratio: 3 / 2;
+				border-radius: 8px;
+				margin-bottom: 1.5rem;
+				object-fit: cover;
+			}
+			#modalPreview .article-body, 
+			#modalPreview .seccion-dinamica .article-content {
+				font-family: 'Metropolis', sans-serif;
+				font-weight: normal;
+				font-size: 1.15rem;
+				line-height: 1.8;
+				color: #2b2b2b;
+			}
+			#modalPreview .article-body br, 
+			#modalPreview .seccion-dinamica .article-content br {
+				content: "";
+				display: block;
+				margin-top: 1.2rem;
+			}
+			#modalPreview .seccion-dinamica {
+				margin-top: 3.5rem;
+			}
+			#modalPreview .seccion-contenido-lateral {
+				border-left: 4px solid var(--ipunto-red); 
+				padding-left: 1.5rem;           
+				margin-bottom: 2rem;
+			}
+			#modalPreview .seccion-categoria {
+				display: block;
+				color: var(--ipunto-red);
+				font-family: 'Metropolis', sans-serif;
+				font-size: 0.85rem;
+				text-transform: uppercase;
+				letter-spacing: 1.5px;
+				font-weight: 900;
+				margin-bottom: 0.5rem;
+			}
+			#modalPreview .seccion-subtitulo {
+				font-family: 'Metropolis', sans-serif;
+				font-weight: 900;
+				font-size: 1.8rem;
+				line-height: 1.25;
+				letter-spacing: -0.02em;
+				color: #111;
+				margin-bottom: 1.5rem;
+			}
+			#modalPreview .seccion-img-container {
+				margin-top: 1.5rem;
+				margin-bottom: 2rem;
+			}
+			#modalPreview .seccion-divisor {
+				border: none;
+				border-bottom: 1px solid var(--ipunto-red); 
+				margin: 3rem 0;
+			}
+			
+			/* CONTENEDOR DEL ICONO DE CIERRE */
+			#modalPreview .seccion-divisor-con-icono {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin: 3rem 0 1rem 0; 
+				width: 100%;
+			}
+			#modalPreview .seccion-divisor-con-icono::before,
+			#modalPreview .seccion-divisor-con-icono::after {
+				content: "";
+				flex: 1;
+				border-bottom: 1px solid var(--ipunto-red);
+				opacity: 0.4;
+			}
+			#modalPreview .seccion-divisor-con-icono::before { margin-right: 25px; }
+			#modalPreview .seccion-divisor-con-icono::after { margin-left: 25px; }
+			
+			/* CORREGIDO: Imagen del favicon cuadrada */
+			#modalPreview .seccion-divisor-con-icono img {
+				width: 28px;
+				height: 28px;
+				object-fit: contain;
+				border-radius: 0px !important; /* Forzamos que sea cuadrado */
+			}
+		</style>
+		
+		<div class="article-container">
+			<header class="mb-5 text-start">
+				<h1 class="article-hero-title mb-4">${titulo}</h1>
+				
+				${resumen ? `<p class="article-lead mb-4">${resumen.replace(/\n/g, "<br>")}</p>` : ""}
+				
+				<div class="article-meta py-3 d-flex justify-content-between align-items-center">
+					<div>
+						<span>Por <strong>Redacción iPunto</strong></span>
+						<span class="mx-2">•</span>
+						<span>Vista Previa</span>
+					</div>
+					<div>
+						<i class="fa-regular fa-clock me-1"></i> 3 min de lectura
 					</div>
 				</div>
-				<div class="col-md-4 col-lg-3 order-1 order-md-2 mb-3 mb-md-0" id="contenedor-img-${idImgUnica}">
-					<img id="${idImgUnica}" src="" style="width:100%; border-radius:8px; aspect-ratio: 3 / 2; object-fit:cover; display:none;">
+			</header>
+			
+			${srcPortada ? `
+			<div class="mb-5">
+				<img src="${srcPortada}" class="article-hero-image" alt="Portada">
+			</div>
+			` : ""}
+			
+			<div class="article-body">
+				${cuerpoPrincipal.replace(/\n/g, "<br>")}
+			</div>
+			
+			<div id="preview-secciones-dinamicas"></div>
+		</div>
+	`;
+
+	$("#modalPreview .modal-body").html(htmlPreview);
+	var contenedorSecciones = $("#preview-secciones-dinamicas");
+	var totalSecciones = $(".seccion-card").length;
+
+	// 4. CICLO DE SECCIONES SECUNDARIAS
+	$(".seccion-card").each(function (index, elemento) {
+		var bloque = $(elemento);
+		var volantaSec = bloque.find("input[name='categorias_seccion[]']").val() || "";
+		var subtituloSec = bloque.find("input[name='subtitulos[]']").val() || "";
+		var cuerpoBloqueSec = bloque.find("textarea[name='cuerpos_seccion[]']").val() || "";
+		
+		var inputImgBloque = bloque.find(".file-upload-input")[0];
+		var srcMuestraBloque = bloque.find(".preview-img").attr("src");
+		var srcSec = "";
+
+		if (inputImgBloque && inputImgBloque.files && inputImgBloque.files[0]) {
+			srcSec = URL.createObjectURL(inputImgBloque.files[0]);
+		} else if (srcMuestraBloque && srcMuestraBloque.trim() !== "") {
+			srcSec = srcMuestraBloque;
+		}
+
+		if (index === 0) {
+			contenedorSecciones.before('<hr class="seccion-divisor mt-5">');
+		}
+
+		var htmlBloquePreview = `
+			<div class="seccion-dinamica">
+				<div class="seccion-contenido-lateral">
+					${volantaSec ? `<span class="seccion-categoria">${volantaSec}</span>` : ""}
+					${subtituloSec ? `<h3 class="seccion-subtitulo">${subtituloSec}</h3>` : ""}
+					
+					${srcSec ? `
+					<div class="seccion-img-container">
+						<img src="${srcSec}" class="seccion-dinamica-img" alt="Subsección">
+					</div>
+					` : ""}
+					
+					<div class="article-content">
+						${cuerpoBloqueSec.replace(/\n/g, "<br>")}
+					</div>
 				</div>
+				
+				${(index + 1 < totalSecciones) ? '<hr class="seccion-divisor">' : ''}
 			</div>
 		`;
+		
+		contenedorSecciones.append(htmlBloquePreview);
+	});
 
-                contenedorDestino.append(htmlBloquePreview);
+	// CORREGIDO: Inyectamos el tag img real con fallback de rutas relativas
+	if (totalSecciones > 0) {
+		contenedorSecciones.append(`
+			<div class="seccion-divisor-con-icono">
+				<img src="../assets/img/favicon.png" onerror="this.src='assets/img/favicon.png'; this.onerror=null;" alt="Cierre de nota">
+			</div>
+		`);
+	}
 
-                if (inputImgBloque && inputImgBloque.files && inputImgBloque.files[0]) {
-                    var readerBloque = new FileReader();
-                    readerBloque.onload = function(e) {
-                        $("#" + idImgUnica).attr("src", e.target.result).show();
-                    }
-                    readerBloque.readAsDataURL(inputImgBloque.files[0]);
-                } else if (srcMuestraBloque && srcMuestraBloque.trim() !== "") {
-                    $("#" + idImgUnica).attr("src", srcMuestraBloque).show();
-                } else {
-                    $("#contenedor-img-" + idImgUnica).remove();
-                    contenedorDestino.children().last().find(".col-md-8").removeClass("col-md-8 col-lg-9").addClass("col-12");
-                }
-            });
-
-            $("#modalPreview").modal("show");
-        }
+	$("#modalPreview").modal("show");
+}
 // INICIALIZACIÓN DE SCRIPT
 init();

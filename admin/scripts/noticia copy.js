@@ -144,7 +144,7 @@ function agregarSeccion() {
 
                     <div class="col-md-4 col-lg-3 mb-4 mb-md-0 order-1 order-md-2 d-flex flex-column align-items-md-center justify-content-start">
                         <label class="fw-bold mb-2 text-muted small align-self-start align-self-md-center">Foto Opcional</label>
-                        <div class="drop-zone dz-seccion shadow-sm" style="width: 100%; max-width: 240px; aspect-ratio: 16/9; position: relative; border: 2px dashed #cbd5e1; border-radius: 12px; background-color: #f8fafc; overflow: hidden; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; cursor: pointer;">
+                        <div class="drop-zone dz-seccion shadow-sm" style="width: 100%; max-width: 240px; aspect-ratio: 3 / 2; position: relative; border: 2px dashed #cbd5e1; border-radius: 12px; background-color: #f8fafc; overflow: hidden; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; cursor: pointer;">
                             <div class="placeholder-content text-center text-muted p-2">
                                 <i class="fa fa-image mb-1" style="font-size: 1.4rem; color: #64748b;"></i>
                                 <span class="d-block fw-bold text-secondary" style="font-size: 0.75rem;">Subir imagen</span>
@@ -322,11 +322,11 @@ function mostrar(idnoticia) {
                                 </div>
                                 <div class="col-md-4 col-lg-3 mb-4 mb-md-0 order-1 order-md-2 d-flex flex-column align-items-md-center justify-content-start">
                                     <label class="fw-bold mb-2 text-muted small align-self-start align-self-md-center">Foto Opcional</label>
-                                    <div class="drop-zone dz-seccion shadow-sm" style="width: 100%; max-width: 240px; aspect-ratio: 16/9; position: relative; border: 2px dashed #cbd5e1; border-radius: 12px; background-color: #f8fafc; overflow: hidden; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; cursor: pointer;">
+                                    <div class="drop-zone dz-seccion shadow-sm" style="width: 100%; max-width: 240px; aspect-ratio: 3 / 2; position: relative; border: 2px dashed #cbd5e1; border-radius: 12px; background-color: #f8fafc; overflow: hidden; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; cursor: pointer;">
                                         <div class="placeholder-content text-center text-muted p-2" style="${tieneImagen ? "display:none;" : ""}">
                                             <i class="fa fa-image mb-1" style="font-size: 1.4rem; color: #64748b;"></i>
                                             <span class="d-block fw-bold text-secondary" style="font-size: 0.75rem;">Subir imagen</span>
-                                            <span class="text-muted d-block" style="font-size: 0.65rem;">Formato horizontal 16:9</span>
+                                            <span class="text-muted d-block" style="font-size: 0.65rem;">Formato 3:2 - 1200x800</span>
                                         </div>
                                         <input type="file" class="file-upload-input" name="imagenes_seccion[]" accept="image/jpeg, image/png, image/webp" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; z-index: 2;">
                                         <input type="hidden" name="imagenes_seccion_actuales[]" value="${seccion.imagen || ""}">
@@ -551,7 +551,7 @@ function activar(idnoticia) {
 					</div>
 				</div>
 				<div class="col-md-4 col-lg-3 order-1 order-md-2 mb-3 mb-md-0" id="contenedor-img-${idImgUnica}">
-					<img id="${idImgUnica}" src="" style="width:100%; border-radius:8px; object-fit:cover; display:none;">
+					<img id="${idImgUnica}" src="" style="width:100%; border-radius:8px; aspect-ratio: 3 / 2; object-fit:cover; display:none;">
 				</div>
 			</div>
 		`;
