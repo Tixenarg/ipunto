@@ -1,0 +1,24 @@
+[25-Aug-2026 23:06:32 Europe/Berlin] PHP Warning:  Undefined array key "idusuario" in C:\xampp\htdocs\ipunto\ajax\noticia.php on line 27
+[25-Aug-2026 23:06:33 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`ipunto`.`noticia`, CONSTRAINT `fk_noticia_usuario` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE SET NULL ON UPDATE CASCADE) in C:\xampp\htdocs\ipunto\config\Conexion.php:49
+Stack trace:
+#0 C:\xampp\htdocs\ipunto\config\Conexion.php(49): mysqli->query('INSERT INTO not...')
+#1 C:\xampp\htdocs\ipunto\modelos\Noticia.php(28): ejecutarConsulta_retornarID('INSERT INTO not...')
+#2 C:\xampp\htdocs\ipunto\ajax\noticia.php(113): Noticia->insertar(NULL, '1', 'fasdfasdf', 'asdfasdf', 'asdfasdfasdfasd...', '1787691993.webp', 'Redacci\xC3\xB3n I.', 'Noticia', '', Array, Array, Array, Array)
+#3 {main}
+  thrown in C:\xampp\htdocs\ipunto\config\Conexion.php on line 49
+[25-Aug-2026 23:06:54 Europe/Berlin] PHP Warning:  Undefined array key "idusuario" in C:\xampp\htdocs\ipunto\ajax\noticia.php on line 27
+[25-Aug-2026 23:06:54 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`ipunto`.`noticia`, CONSTRAINT `fk_noticia_usuario` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE SET NULL ON UPDATE CASCADE) in C:\xampp\htdocs\ipunto\config\Conexion.php:49
+Stack trace:
+#0 C:\xampp\htdocs\ipunto\config\Conexion.php(49): mysqli->query('INSERT INTO not...')
+#1 C:\xampp\htdocs\ipunto\modelos\Noticia.php(28): ejecutarConsulta_retornarID('INSERT INTO not...')
+#2 C:\xampp\htdocs\ipunto\ajax\noticia.php(113): Noticia->insertar(NULL, '1', 'fasdfasdf', 'asdfasdf', 'asdfasdfasdfasd...', '1787692014.webp', 'Redacci\xC3\xB3n I.', 'Noticia', '', Array, Array, Array, Array)
+#3 {main}
+  thrown in C:\xampp\htdocs\ipunto\config\Conexion.php on line 49
+[25-Aug-2026 23:31:25 Europe/Berlin] PHP Warning:  Undefined array key "idusuario" in C:\xampp\htdocs\ipunto\ajax\noticia.php on line 27
+[25-Aug-2026 23:31:26 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`ipunto`.`noticia`, CONSTRAINT `fk_noticia_usuario` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE SET NULL ON UPDATE CASCADE) in C:\xampp\htdocs\ipunto\config\Conexion.php:49
+Stack trace:
+#0 C:\xampp\htdocs\ipunto\config\Conexion.php(49): mysqli->query('INSERT INTO not...')
+#1 C:\xampp\htdocs\ipunto\modelos\Noticia.php(28): ejecutarConsulta_retornarID('INSERT INTO not...')
+#2 C:\xampp\htdocs\ipunto\ajax\noticia.php(113): Noticia->insertar(NULL, '1', 'asdf', 'asdfa', '', '1787693486.webp', 'Redacci\xC3\xB3n I.', 'Noticia', '', Array, Array, Array, Array)
+#3 {main}
+  thrown in C:\xampp\htdocs\ipunto\config\Conexion.php on line 49

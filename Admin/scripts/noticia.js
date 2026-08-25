@@ -2,11 +2,11 @@ var tabla;
 var contadorSecciones = 0; // Inicia en 0 para que la función limpiar() agregue la primera
 
 function init() {
-	// MAGIA ULTRA UX EXCLUSIVA: Inyectamos estilos premium para fotos, zonas de carga y animaciones
-	$("<style>")
-		.prop("type", "text/css")
-		.html(
-			`
+  // MAGIA ULTRA UX EXCLUSIVA: Inyectamos estilos premium para fotos, zonas de carga y animaciones
+  $("<style>")
+    .prop("type", "text/css")
+    .html(
+      `
 			#imagenmuestra, .preview-img {
 				width: 100% !important;
 				height: 100% !important;
@@ -42,101 +42,109 @@ function init() {
 				margin: 40px 0;
 			}
 		`,
-		)
-		.appendTo("head");
+    )
+    .appendTo("head");
 
-	// 1. Mostrar listado al inicio
-	mostrarform(false);
-	listar();
+  // 1. Mostrar listado al inicio
+  mostrarform(false);
+  listar();
 
-	// 2. Controlar el envío del nuevo formulario
-	$("#formulario")
-		.off("submit")
-		.on("submit", function (e) {
-			e.preventDefault();
-			guardaryeditar(e);
-		});
+  // 2. Controlar el envío del nuevo formulario
+  $("#formulario")
+    .off("submit")
+    .on("submit", function (e) {
+      e.preventDefault();
+      guardaryeditar(e);
+    });
 
-	// INTERCEPTOR INTELIGENTE: Botón Previsualizar Nota
-	$("#btnPrevisualizar").on("click", function () {
-		construirPrevisualizacionEnVivo();
-	});
+  // INTERCEPTOR INTELIGENTE: Botón Previsualizar Nota
+  $("#btnPrevisualizar").on("click", function () {
+    construirPrevisualizacionEnVivo();
+  });
 
-	// BOTÓN INTERNO DEL MODAL: Permite publicar directo desde el preview
-	$("#btnConfirmarPublicacionDesdePreview")
-		.off("click")
-		.on("click", function (e) {
-			e.preventDefault();
-			$("#modalPreview").modal("hide");
-			guardaryeditar(); // CORRECCIÓN: Llama directo al motor de guardado sin fallar
-		});
+  // BOTÓN INTERNO DEL MODAL: Permite publicar directo desde el preview
+  $("#btnConfirmarPublicacionDesdePreview")
+    .off("click")
+    .on("click", function (e) {
+      e.preventDefault();
+      $("#modalPreview").modal("hide");
+      guardaryeditar(); // CORRECCIÓN: Llama directo al motor de guardado sin fallar
+    });
 
-	// 5. Contador de caracteres para el título
-	$("#titulo").on("input", function () {
-		var limite = 100;
-		var actual = $(this).val().length;
-		$("#titulo_count").text(actual + "/" + limite);
-		if (actual >= limite) {
-			$("#titulo_count").css("color", "red");
-		} else {
-			$("#titulo_count").css("color", "#6c757d");
-		}
-	});
+  // 5. Contador de caracteres para el título
+  $("#titulo").on("input", function () {
+    var limite = 100;
+    var actual = $(this).val().length;
+    $("#titulo_count").text(actual + "/" + limite);
+    if (actual >= limite) {
+      $("#titulo_count").css("color", "red");
+    } else {
+      $("#titulo_count").css("color", "#6c757d");
+    }
+  });
+
+  // Renovar la sesión cada 15 minutos (900,000 milisegundos)
+  setInterval(function () {
+    fetch("../../controladores/keep_alive.php")
+      .then((response) => response.json())
+      .then((data) => console.log("Ping de sesión exitoso: " + data.hora))
+      .catch((error) => console.error("Fallo al renovar sesión", error));
+  }, 900000);
 }
 
 // ==========================================
 // PREVISUALIZACIÓN UX/UI GLOBAL (Portada y Secciones)
 // ==========================================
 $(document).on("change", ".file-upload-input", function () {
-	var archivo = this.files[0];
-	var dropZone = $(this).closest(".drop-zone");
-	var preview = dropZone.find(".preview-img");
-	var placeholder = dropZone.find(".placeholder-content");
-	var col = $(this).closest(".col-md-4");
-	var btnQuitar = col.find(".btn-quitar-foto-seccion");
+  var archivo = this.files[0];
+  var dropZone = $(this).closest(".drop-zone");
+  var preview = dropZone.find(".preview-img");
+  var placeholder = dropZone.find(".placeholder-content");
+  var col = $(this).closest(".col-md-4");
+  var btnQuitar = col.find(".btn-quitar-foto-seccion");
 
-	if (archivo) {
-		var reader = new FileReader();
-		reader.onload = function (e) {
-			preview.attr("src", e.target.result).fadeIn();
-			placeholder.hide();
-			if (btnQuitar.length) btnQuitar.show(); // Mostrar el botón de anular si se cargó una foto
-		};
-		reader.readAsDataURL(archivo);
-	} else {
-		preview.hide().attr("src", "");
-		placeholder.fadeIn();
-		if (btnQuitar.length) btnQuitar.hide();
-	}
+  if (archivo) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      preview.attr("src", e.target.result).fadeIn();
+      placeholder.hide();
+      if (btnQuitar.length) btnQuitar.show(); // Mostrar el botón de anular si se cargó una foto
+    };
+    reader.readAsDataURL(archivo);
+  } else {
+    preview.hide().attr("src", "");
+    placeholder.fadeIn();
+    if (btnQuitar.length) btnQuitar.hide();
+  }
 });
 
 // ==========================================
 // ACCIÓN PARA ANULAR FOTO EN SECCIONES (REQUERIMIENTO 2)
 // ==========================================
 function quitarFotoSeccion(boton) {
-	var col = $(boton).closest(".col-md-4");
-	var dropZone = col.find(".drop-zone");
-	var preview = dropZone.find(".preview-img");
-	var placeholder = dropZone.find(".placeholder-content");
-	var fileInput = dropZone.find(".file-upload-input");
-	var hiddenInput = col.find("input[name='imagenes_seccion_actuales[]']");
+  var col = $(boton).closest(".col-md-4");
+  var dropZone = col.find(".drop-zone");
+  var preview = dropZone.find(".preview-img");
+  var placeholder = dropZone.find(".placeholder-content");
+  var fileInput = dropZone.find(".file-upload-input");
+  var hiddenInput = col.find("input[name='imagenes_seccion_actuales[]']");
 
-	fileInput.val(""); // Resetea el selector de archivos
-	if (hiddenInput.length) {
-		hiddenInput.val(""); // Resetea el campo oculto de la BD para que guarde vacío
-	}
-	preview.hide().attr("src", "");
-	placeholder.fadeIn();
-	$(boton).hide(); // Esconde el botón de quitar foto
+  fileInput.val(""); // Resetea el selector de archivos
+  if (hiddenInput.length) {
+    hiddenInput.val(""); // Resetea el campo oculto de la BD para que guarde vacío
+  }
+  preview.hide().attr("src", "");
+  placeholder.fadeIn();
+  $(boton).hide(); // Esconde el botón de quitar foto
 }
 
 // ==========================================
 // FUNCIÓN DE BLOQUES DINÁMICOS REDISEÑADA (NIVEL DIOS)
 // ==========================================
 function agregarSeccion() {
-	contadorSecciones++;
+  contadorSecciones++;
 
-	const htmlBloque = `
+  const htmlBloque = `
         <div class="card mb-4 seccion-card border-0 shadow-sm" style="border-left: 5px solid #0d6efd !important; border-radius: 10px; background-color: #ffffff;">
             <div class="card-header d-flex justify-content-between align-items-center border-bottom-0 py-2 px-3" style="border-top-right-radius: 10px; background-color: #f8fafc;">
                 <span class="numero-seccion" style="background-color: #e7f1ff; color: #0d6efd; font-weight: 700; border-radius: 6px; padding: 4px 10px; font-size: 0.85rem;">Bloque ${contadorSecciones}</span>
@@ -186,23 +194,23 @@ function agregarSeccion() {
         </div>
     `;
 
-	$("#contenedor-secciones").append(htmlBloque);
+  $("#contenedor-secciones").append(htmlBloque);
 }
 
 function eliminarSeccion(boton) {
-	var tarjeta = $(boton).closest(".seccion-card");
-	tarjeta.animate({ opacity: 0, marginTop: "-20px" }, 250, function () {
-		tarjeta.remove();
-		actualizarNumeros();
-	});
+  var tarjeta = $(boton).closest(".seccion-card");
+  tarjeta.animate({ opacity: 0, marginTop: "-20px" }, 250, function () {
+    tarjeta.remove();
+    actualizarNumeros();
+  });
 }
 
 function actualizarNumeros() {
-	contadorSecciones = 0;
-	$(".numero-seccion").each(function () {
-		contadorSecciones++;
-		$(this).text("Bloque " + contadorSecciones);
-	});
+  contadorSecciones = 0;
+  $(".numero-seccion").each(function () {
+    contadorSecciones++;
+    $(this).text("Bloque " + contadorSecciones);
+  });
 }
 
 // ==========================================
@@ -210,18 +218,18 @@ function actualizarNumeros() {
 // ==========================================
 
 function limpiar() {
-	$("#idnoticia").val("");
-	$("#titulo").val("");
-	$("#resumen").val("");
-	$("#cuerpo").val("");
-	$("#autor").val("Redacción I.");
-	$("#idcategoria").val("1");
-	$("#imagenmuestra").attr("src", "").hide();
-	$("#imagenactual").val("");
-	$("#imagen").val("");
+  $("#idnoticia").val("");
+  $("#titulo").val("");
+  $("#resumen").val("");
+  $("#cuerpo").val("");
+  $("#autor").val("Redacción I.");
+  $("#idcategoria").val("1");
+  $("#imagenmuestra").attr("src", "").hide();
+  $("#imagenactual").val("");
+  $("#imagen").val("");
 
-	// PROTECCIÓN EXCLUSIVA: Reiniciamos las opciones nativas del select de clasificación para que no se pierdan
-	$("#clasificacion").html(`
+  // PROTECCIÓN EXCLUSIVA: Reiniciamos las opciones nativas del select de clasificación para que no se pierdan
+  $("#clasificacion").html(`
 		<option value="" disabled selected>Seleccione Clasificación...</option>
 		<option value="Noticia">Noticia Estándar</option>
 		<option value="Destacada">Nota Destacada</option>
@@ -229,99 +237,104 @@ function limpiar() {
 		<option value="Opinion">Artículo de Opinión</option>
 	`);
 
-	$("#contenedor-secciones").empty();
-	contadorSecciones = 0;
-	agregarSeccion();
+  $("#contenedor-secciones").empty();
+  contadorSecciones = 0;
+  agregarSeccion();
 }
 
 function mostrarform(flag) {
-	limpiar();
-	if (flag) {
-		$("#listadoregistros").hide();
-		$("#formularioregistros").show();
-		$("#btnagregar").hide();
-	} else {
-		$("#listadoregistros").show();
-		$("#formularioregistros").hide();
-		$("#btnagregar").show();
-	}
+  limpiar();
+  if (flag) {
+    $("#listadoregistros").hide();
+    $("#formularioregistros").show();
+    $("#btnagregar").hide();
+  } else {
+    $("#listadoregistros").show();
+    $("#formularioregistros").hide();
+    $("#btnagregar").show();
+  }
 }
 
 function cancelarform() {
-	mostrarform(false);
+  mostrarform(false);
 }
 
 function mostrar(idnoticia) {
-	limpiar();
-	mostrarform(true);
+  limpiar();
+  mostrarform(true);
 
-	$.post(
-		RUTA_BASE + "ajax/noticia.php?op=mostrar",
-		{ idnoticia: idnoticia },
-		function (data, status) {
-			if (typeof data === "string") {
-				data = JSON.parse(data);
-			}
+  $.post(
+    RUTA_BASE + "ajax/noticia.php?op=mostrar",
+    { idnoticia: idnoticia },
+    function (data, status) {
+      if (typeof data === "string") {
+        data = JSON.parse(data);
+      }
 
-			// 1. Rellenamos la noticia principal
-			$("#idnoticia").val(data.idnoticia);
-			$("#idcategoria").val(data.idcategoria);
-			$("#titulo").val(data.titulo);
-			$("#resumen").val(data.resumen);
-			$("#cuerpo").val(data.cuerpo);
-			$("#autor").val(data.autor);
-			$("#explicacion_calificacion").val(data.explicacion_calificacion);
+      // 1. Rellenamos la noticia principal
+      $("#idnoticia").val(data.idnoticia);
+      $("#idcategoria").val(data.idcategoria);
+      $("#titulo").val(data.titulo);
+      $("#resumen").val(data.resumen);
+      $("#cuerpo").val(data.cuerpo);
+      $("#autor").val(data.autor);
+      $("#explicacion_calificacion").val(data.explicacion_calificacion);
 
-			// ==========================================
-			// FIX DEFINITIVO: SELECTOR INTELIGENTE DE CLASIFICACIÓN
-			// ==========================================
-			var valorBd = (data.calificacion || data.clasificacion || "").trim();
-			var selectCalificacion =
-				$("#calificacion").length > 0 ? $("#calificacion") : $("#clasificacion");
+      // ==========================================
+      // FIX DEFINITIVO: SELECTOR INTELIGENTE DE CLASIFICACIÓN
+      // ==========================================
+      var valorBd = (data.calificacion || data.clasificacion || "").trim();
+      var selectCalificacion =
+        $("#calificacion").length > 0
+          ? $("#calificacion")
+          : $("#clasificacion");
 
-			if (valorBd !== "") {
-				var encontrado = false;
-				selectCalificacion.find("option").each(function () {
-					if (
-						$(this).val().toLowerCase() === valorBd.toLowerCase() ||
-						$(this).text().toLowerCase() === valorBd.toLowerCase()
-					) {
-						selectCalificacion.val($(this).val());
-						encontrado = true;
-					}
-				});
-				// Si no encuentra coincidencia, asume Noticia por seguridad
-				if (!encontrado) selectCalificacion.val("Noticia");
-			} else {
-				selectCalificacion.val("Noticia");
-			}
-			// ==========================================
+      if (valorBd !== "") {
+        var encontrado = false;
+        selectCalificacion.find("option").each(function () {
+          if (
+            $(this).val().toLowerCase() === valorBd.toLowerCase() ||
+            $(this).text().toLowerCase() === valorBd.toLowerCase()
+          ) {
+            selectCalificacion.val($(this).val());
+            encontrado = true;
+          }
+        });
+        // Si no encuentra coincidencia, asume Noticia por seguridad
+        if (!encontrado) selectCalificacion.val("Noticia");
+      } else {
+        selectCalificacion.val("Noticia");
+      }
+      // ==========================================
 
-			$("#titulo").trigger("input");
+      $("#titulo").trigger("input");
 
-			if (data.imagen) {
-				$("#imagenmuestra").show();
-				$("#imagenmuestra").attr("src", "../public/files/noticias/" + data.imagen);
-				$("#imagenactual").val(data.imagen);
-			} else {
-				$("#imagenmuestra").hide();
-				$("#imagenactual").val("");
-			}
+      if (data.imagen) {
+        $("#imagenmuestra").show();
+        $("#imagenmuestra").attr(
+          "src",
+          "../public/files/noticias/" + data.imagen,
+        );
+        $("#imagenactual").val(data.imagen);
+      } else {
+        $("#imagenmuestra").hide();
+        $("#imagenactual").val("");
+      }
 
-			// 3. Renderizado de los bloques dinámicos guardados (Diseño Premium)
-			$("#contenedor-secciones").empty();
-			contadorSecciones = 0;
+      // 3. Renderizado de los bloques dinámicos guardados (Diseño Premium)
+      $("#contenedor-secciones").empty();
+      contadorSecciones = 0;
 
-			if (data.secciones && data.secciones.length > 0) {
-				data.secciones.forEach(function (seccion, index) {
-					contadorSecciones++;
+      if (data.secciones && data.secciones.length > 0) {
+        data.secciones.forEach(function (seccion, index) {
+          contadorSecciones++;
 
-					let tieneImagen = seccion.imagen && seccion.imagen !== "";
-					let srcImagen = tieneImagen
-						? `../public/files/noticias/${seccion.imagen}`
-						: "";
+          let tieneImagen = seccion.imagen && seccion.imagen !== "";
+          let srcImagen = tieneImagen
+            ? `../public/files/noticias/${seccion.imagen}`
+            : "";
 
-					let htmlBloque = `
+          let htmlBloque = `
                     <div class="card mb-4 seccion-card border-0 shadow-sm" style="border-left: 5px solid #0d6efd !important; border-radius: 10px; background-color: #ffffff;">
                         <div class="card-header d-flex justify-content-between align-items-center border-bottom-0 py-2 px-3" style="border-top-right-radius: 10px; background-color: #f8fafc;">
                             <span class="numero-seccion" style="background-color: #e7f1ff; color: #0d6efd; font-weight: 700; border-radius: 6px; padding: 4px 10px; font-size: 0.85rem;">Bloque ${contadorSecciones}</span>
@@ -367,174 +380,182 @@ function mostrar(idnoticia) {
                         </div>
                     </div>
                 `;
-					$("#contenedor-secciones").append(htmlBloque);
-				});
-			} else {
-				agregarSeccion();
-			}
-		},
-	);
+          $("#contenedor-secciones").append(htmlBloque);
+        });
+      } else {
+        agregarSeccion();
+      }
+    },
+  );
 }
 
 // Variable global para recordar qué pestaña estamos viendo
 var filtroActual = "activas";
 
 function listar() {
-	tabla = $("#tbllistado").DataTable({
-		ajax: {
-			url: RUTA_BASE + "ajax/noticia.php?op=listar",
-			type: "get",
-			dataType: "json",
-		},
-		autoWidth: false,
-		responsive: true,
-		columnDefs: [
-			{ targets: 0, width: "120px", className: "text-center align-middle" },
-			{ targets: 1, width: "100px", className: "text-center align-middle" },
-			{ targets: 2, className: "align-middle" },
-			{ targets: 3, width: "140px", className: "text-center align-middle" },
-			{ targets: 4, width: "110px", className: "text-center align-middle" },
-		],
-		language: {
-			sProcessing: "Procesando...",
-			sLengthMenu: "Mostrar _MENU_ registros",
-			sZeroRecords: "No se encontraron resultados",
-			sEmptyTable: "Ningún dato disponible en esta tabla",
-			sInfo:
-				"Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-			sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
-			sSearch: "Buscar nota rápida:",
-			sLoadingRecords: "Cargando...",
-			oPaginate: {
-				sFirst: "Primero",
-				sLast: "Último",
-				sNext: "Siguiente",
-				sPrevious: "Anterior",
-			},
-		},
-	});
+  tabla = $("#tbllistado").DataTable({
+    ajax: {
+      url: RUTA_BASE + "ajax/noticia.php?op=listar",
+      type: "get",
+      dataType: "json",
+    },
+    autoWidth: false,
+    responsive: true,
+    columnDefs: [
+      { targets: 0, width: "120px", className: "text-center align-middle" },
+      { targets: 1, width: "100px", className: "text-center align-middle" },
+      { targets: 2, className: "align-middle" },
+      { targets: 3, width: "140px", className: "text-center align-middle" },
+      { targets: 4, width: "110px", className: "text-center align-middle" },
+    ],
+    language: {
+      sProcessing: "Procesando...",
+      sLengthMenu: "Mostrar _MENU_ registros",
+      sZeroRecords: "No se encontraron resultados",
+      sEmptyTable: "Ningún dato disponible en esta tabla",
+      sInfo:
+        "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+      sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+      sSearch: "Buscar nota rápida:",
+      sLoadingRecords: "Cargando...",
+      oPaginate: {
+        sFirst: "Primero",
+        sLast: "Último",
+        sNext: "Siguiente",
+        sPrevious: "Anterior",
+      },
+    },
+  });
 }
 
 function cambiarFiltro(nuevoFiltro) {
-	filtroActual = nuevoFiltro;
+  filtroActual = nuevoFiltro;
 
-	$(".nav-pills .nav-link").removeClass("active").addClass("text-secondary");
-	$("#tab-" + nuevoFiltro)
-		.addClass("active")
-		.removeClass("text-secondary");
+  $(".nav-pills .nav-link").removeClass("active").addClass("text-secondary");
+  $("#tab-" + nuevoFiltro)
+    .addClass("active")
+    .removeClass("text-secondary");
 
-	tabla.ajax
-		.url(RUTA_BASE + "ajax/noticia.php?op=listar&filtro=" + filtroActual)
-		.load();
+  tabla.ajax
+    .url(RUTA_BASE + "ajax/noticia.php?op=listar&filtro=" + filtroActual)
+    .load();
 }
 
 var procesando_envio = false;
 function guardaryeditar(e) {
-	if (e) e.preventDefault();
+  if (e) e.preventDefault();
 
-	// --- REQUERIMIENTO 1: VALIDACIÓN DE FOTO DE PORTADA OBLIGATORIA ---
-	var tieneNuevaImagen = $("#imagen")[0].files.length > 0;
-	var tieneImagenActual = $("#imagenactual").val().trim() !== "";
+  // --- REQUERIMIENTO 1: VALIDACIÓN DE FOTO DE PORTADA OBLIGATORIA ---
+  var tieneNuevaImagen = $("#imagen")[0].files.length > 0;
+  var tieneImagenActual = $("#imagenactual").val().trim() !== "";
 
-	if (!tieneNuevaImagen && !tieneImagenActual) {
-		Swal.fire({
-			title: "¡Foto de Portada Obligatoria!",
-			text: "Por favor, selecciona una foto de portada principal. La noticia no puede ser guardada sin su imagen principal.",
-			icon: "warning",
-			confirmButtonText: "Entendido",
-		});
-		return; // Frena el proceso por completo
-	}
-	// ------------------------------------------------------------------
+  if (!tieneNuevaImagen && !tieneImagenActual) {
+    Swal.fire({
+      title: "¡Foto de Portada Obligatoria!",
+      text: "Por favor, selecciona una foto de portada principal. La noticia no puede ser guardada sin su imagen principal.",
+      icon: "warning",
+      confirmButtonText: "Entendido",
+    });
+    return; // Frena el proceso por completo
+  }
+  // ------------------------------------------------------------------
 
-	if (procesando_envio === true) return;
+  if (procesando_envio === true) return;
 
-	procesando_envio = true;
-	var btnContenidoOriginal = $("#btnGuardar").html();
-	$("#btnGuardar")
-		.prop("disabled", true)
-		.html('<i class="fa-solid fa-spinner fa-spin me-2"></i>Guardando...');
+  procesando_envio = true;
+  var btnContenidoOriginal = $("#btnGuardar").html();
+  $("#btnGuardar")
+    .prop("disabled", true)
+    .html('<i class="fa-solid fa-spinner fa-spin me-2"></i>Guardando...');
 
-	var formData = new FormData($("#formulario")[0]);
+  var formData = new FormData($("#formulario")[0]);
 
-	$.ajax({
-		url: RUTA_BASE + "ajax/noticia.php?op=guardaryeditar",
-		type: "POST",
-		data: formData,
-		contentType: false,
-		processData: false,
-		success: function (datos) {
-			Swal.fire({
-				title: "¡Sistema Actualizado!",
-				text: datos,
-				icon: "success",
-				confirmButtonText: "Aceptar",
-			});
-			mostrarform(false);
-			if (typeof tabla !== "undefined") tabla.ajax.reload();
+  $.ajax({
+    url: RUTA_BASE + "ajax/noticia.php?op=guardaryeditar",
+    type: "POST",
+    data: formData,
+    contentType: false,
+    processData: false,
+    success: function (datos) {
+      Swal.fire({
+        title: "¡Sistema Actualizado!",
+        text: datos,
+        icon: "success",
+        confirmButtonText: "Aceptar",
+      });
+      mostrarform(false);
+      if (typeof tabla !== "undefined") tabla.ajax.reload();
 
-			$("#btnGuardar").prop("disabled", false).html(btnContenidoOriginal);
-			procesando_envio = false;
-		},
-		error: function (error) {
-			console.log("Error crítico de AJAX:", error);
-			Swal.fire({
-				title: "Error",
-				text: "Hubo un error al procesar el servidor. Revisa la consola (F12).",
-				icon: "error",
-			});
-			$("#btnGuardar").prop("disabled", false).html(btnContenidoOriginal);
-			procesando_envio = false;
-		},
-	});
+      $("#btnGuardar").prop("disabled", false).html(btnContenidoOriginal);
+      procesando_envio = false;
+    },
+    error: function (error) {
+      console.log("Error crítico de AJAX:", error);
+      Swal.fire({
+        title: "Error",
+        text: "Hubo un error al procesar el servidor. Revisa la consola (F12).",
+        icon: "error",
+      });
+      $("#btnGuardar").prop("disabled", false).html(btnContenidoOriginal);
+      procesando_envio = false;
+    },
+  });
 }
 
 function desactivar(idnoticia) {
-	Swal.fire({
-		title: "¿Estás seguro?",
-		text: "¿Quieres desactivar esta noticia?",
-		icon: "warning",
-		showCancelButton: true,
-		confirmButtonColor: "#3085d6",
-		cancelButtonColor: "#d33",
-		confirmButtonText: "Sí, desactivar",
-		cancelButtonText: "Cancelar",
-	}).then((result) => {
-		if (result.isConfirmed) {
-			$.post(
-				"../ajax/noticia.php?op=desactivar",
-				{ idnoticia: idnoticia },
-				function (e) {
-					tabla.ajax.reload();
-					Swal.fire("Desactivada", "La noticia ha sido desactivada.", "success");
-				},
-			);
-		}
-	});
+  Swal.fire({
+    title: "¿Estás seguro?",
+    text: "¿Quieres desactivar esta noticia?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Sí, desactivar",
+    cancelButtonText: "Cancelar",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.post(
+        "../ajax/noticia.php?op=desactivar",
+        { idnoticia: idnoticia },
+        function (e) {
+          tabla.ajax.reload();
+          Swal.fire(
+            "Desactivada",
+            "La noticia ha sido desactivada.",
+            "success",
+          );
+        },
+      );
+    }
+  });
 }
 
 function activar(idnoticia) {
-	Swal.fire({
-		title: "¿Estás seguro?",
-		text: "¿Quieres volver a activar esta noticia?",
-		icon: "question",
-		showCancelButton: true,
-		confirmButtonColor: "#3085d6",
-		cancelButtonColor: "#d33",
-		confirmButtonText: "Sí, activar",
-		cancelButtonText: "Cancelar",
-	}).then((result) => {
-		if (result.isConfirmed) {
-			$.post(
-				"../ajax/noticia.php?op=activar",
-				{ idnoticia: idnoticia },
-				function (e) {
-					tabla.ajax.reload();
-					Swal.fire("Activada", "La noticia vuelve a estar pública.", "success");
-				},
-			);
-		}
-	});
+  Swal.fire({
+    title: "¿Estás seguro?",
+    text: "¿Quieres volver a activar esta noticia?",
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Sí, activar",
+    cancelButtonText: "Cancelar",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.post(
+        "../ajax/noticia.php?op=activar",
+        { idnoticia: idnoticia },
+        function (e) {
+          tabla.ajax.reload();
+          Swal.fire(
+            "Activada",
+            "La noticia vuelve a estar pública.",
+            "success",
+          );
+        },
+      );
+    }
+  });
 }
 
 // ==========================================
@@ -553,26 +574,31 @@ function activar(idnoticia) {
 // MOTOR DE MAQUETACIÓN EN VIVO (CON FAVICON CUADRADO)
 // ==========================================
 function construirPrevisualizacionEnVivo() {
-	// 1. Recolectamos los datos de los inputs del formulario
-	var categoriaTexto = $("#idcategoria option:selected").text();
-	var volanta = categoriaTexto === "Seleccione Categoría" ? "GENERAL" : categoriaTexto;
-	var titulo = $("#titulo").val() || "Sin título cargado todavía";
-	var resumen = $("#resumen").val() || "";
-	var cuerpoPrincipal = $("#cuerpo").val() || "";
+  // 1. Recolectamos los datos de los inputs del formulario
+  var categoriaTexto = $("#idcategoria option:selected").text();
+  var volanta =
+    categoriaTexto === "Seleccione Categoría" ? "GENERAL" : categoriaTexto;
+  var titulo = $("#titulo").val() || "Sin título cargado todavía";
+  var resumen = $("#resumen").val() || "";
+  var cuerpoPrincipal = $("#cuerpo").val() || "";
 
-	// 2. Procesamos la foto de portada de la noticia principal
-	var inputFotoPrincipal = document.getElementById("imagen");
-	var srcMuestra = $("#imagenmuestra").attr("src");
-	var srcPortada = "";
+  // 2. Procesamos la foto de portada de la noticia principal
+  var inputFotoPrincipal = document.getElementById("imagen");
+  var srcMuestra = $("#imagenmuestra").attr("src");
+  var srcPortada = "";
 
-	if (inputFotoPrincipal && inputFotoPrincipal.files && inputFotoPrincipal.files[0]) {
-		srcPortada = URL.createObjectURL(inputFotoPrincipal.files[0]);
-	} else if (srcMuestra && srcMuestra.trim() !== "") {
-		srcPortada = srcMuestra;
-	}
+  if (
+    inputFotoPrincipal &&
+    inputFotoPrincipal.files &&
+    inputFotoPrincipal.files[0]
+  ) {
+    srcPortada = URL.createObjectURL(inputFotoPrincipal.files[0]);
+  } else if (srcMuestra && srcMuestra.trim() !== "") {
+    srcPortada = srcMuestra;
+  }
 
-	// 3. ARMAMOS EL CONTENEDOR ESPEJO
-	var htmlPreview = `
+  // 3. ARMAMOS EL CONTENEDOR ESPEJO
+  var htmlPreview = `
 		<style>
 			#modalPreview .modal-body {
 				--primary-dark: #1a1a1a;
@@ -721,11 +747,15 @@ function construirPrevisualizacionEnVivo() {
 				</div>
 			</header>
 			
-			${srcPortada ? `
+			${
+        srcPortada
+          ? `
 			<div class="mb-5">
 				<img src="${srcPortada}" class="article-hero-image" alt="Portada">
 			</div>
-			` : ""}
+			`
+          : ""
+      }
 			
 			<div class="article-body">
 				${cuerpoPrincipal.replace(/\n/g, "<br>")}
@@ -735,65 +765,93 @@ function construirPrevisualizacionEnVivo() {
 		</div>
 	`;
 
-	$("#modalPreview .modal-body").html(htmlPreview);
-	var contenedorSecciones = $("#preview-secciones-dinamicas");
-	var totalSecciones = $(".seccion-card").length;
+  $("#modalPreview .modal-body").html(htmlPreview);
+  var contenedorSecciones = $("#preview-secciones-dinamicas");
+  var totalSecciones = $(".seccion-card").length;
 
-	// 4. CICLO DE SECCIONES SECUNDARIAS
-	$(".seccion-card").each(function (index, elemento) {
-		var bloque = $(elemento);
-		var volantaSec = bloque.find("input[name='categorias_seccion[]']").val() || "";
-		var subtituloSec = bloque.find("input[name='subtitulos[]']").val() || "";
-		var cuerpoBloqueSec = bloque.find("textarea[name='cuerpos_seccion[]']").val() || "";
-		
-		var inputImgBloque = bloque.find(".file-upload-input")[0];
-		var srcMuestraBloque = bloque.find(".preview-img").attr("src");
-		var srcSec = "";
+  // 4. CICLO DE SECCIONES SECUNDARIAS
+  $(".seccion-card").each(function (index, elemento) {
+    var bloque = $(elemento);
+    var volantaSec =
+      bloque.find("input[name='categorias_seccion[]']").val() || "";
+    var subtituloSec = bloque.find("input[name='subtitulos[]']").val() || "";
+    var cuerpoBloqueSec =
+      bloque.find("textarea[name='cuerpos_seccion[]']").val() || "";
 
-		if (inputImgBloque && inputImgBloque.files && inputImgBloque.files[0]) {
-			srcSec = URL.createObjectURL(inputImgBloque.files[0]);
-		} else if (srcMuestraBloque && srcMuestraBloque.trim() !== "") {
-			srcSec = srcMuestraBloque;
-		}
+    var inputImgBloque = bloque.find(".file-upload-input")[0];
+    var srcMuestraBloque = bloque.find(".preview-img").attr("src");
+    var srcSec = "";
 
-		if (index === 0) {
-			contenedorSecciones.before('<hr class="seccion-divisor mt-5">');
-		}
+    if (inputImgBloque && inputImgBloque.files && inputImgBloque.files[0]) {
+      srcSec = URL.createObjectURL(inputImgBloque.files[0]);
+    } else if (srcMuestraBloque && srcMuestraBloque.trim() !== "") {
+      srcSec = srcMuestraBloque;
+    }
 
-		var htmlBloquePreview = `
+    if (index === 0) {
+      contenedorSecciones.before('<hr class="seccion-divisor mt-5">');
+    }
+
+    var htmlBloquePreview = `
 			<div class="seccion-dinamica">
 				<div class="seccion-contenido-lateral">
 					${volantaSec ? `<span class="seccion-categoria">${volantaSec}</span>` : ""}
 					${subtituloSec ? `<h3 class="seccion-subtitulo">${subtituloSec}</h3>` : ""}
 					
-					${srcSec ? `
+					${
+            srcSec
+              ? `
 					<div class="seccion-img-container">
 						<img src="${srcSec}" class="seccion-dinamica-img" alt="Subsección">
 					</div>
-					` : ""}
+					`
+              : ""
+          }
 					
 					<div class="article-content">
 						${cuerpoBloqueSec.replace(/\n/g, "<br>")}
 					</div>
 				</div>
 				
-				${(index + 1 < totalSecciones) ? '<hr class="seccion-divisor">' : ''}
+				${index + 1 < totalSecciones ? '<hr class="seccion-divisor">' : ""}
 			</div>
 		`;
-		
-		contenedorSecciones.append(htmlBloquePreview);
-	});
 
-	// CORREGIDO: Inyectamos el tag img real con fallback de rutas relativas
-	if (totalSecciones > 0) {
-		contenedorSecciones.append(`
+    contenedorSecciones.append(htmlBloquePreview);
+  });
+
+  // CORREGIDO: Inyectamos el tag img real con fallback de rutas relativas
+  if (totalSecciones > 0) {
+    contenedorSecciones.append(`
 			<div class="seccion-divisor-con-icono">
 				<img src="../assets/img/favicon.png" onerror="this.src='assets/img/favicon.png'; this.onerror=null;" alt="Cierre de nota">
 			</div>
 		`);
-	}
+  }
 
-	$("#modalPreview").modal("show");
+  $("#modalPreview").modal("show");
 }
+
+// ==========================================
+// MANTENEDOR DE SESIÓN (Keep-Alive)
+// ==========================================
+// Se ejecuta automáticamente cada 15 minutos (900,000 milisegundos)
+setInterval(function() {
+    // Retrocedemos un nivel desde la vista actual hacia la carpeta ajax
+    fetch('../ajax/keep_alive.php')
+        .then(response => {
+            // Verificamos si el servidor devolvió un 200 OK antes de parsear a JSON
+            if (!response.ok) {
+                throw new Error('Error de red: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Renovación de sesión exitosa: " + data.hora);
+        })
+        .catch(error => {
+            console.error("Fallo al contactar al servidor para renovar sesión:", error);
+        });
+}, 900000); // 15 minutos
 // INICIALIZACIÓN DE SCRIPT
 init();

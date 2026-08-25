@@ -2,8 +2,17 @@
 if (strlen(session_id()) < 1) {
     session_start();
 }
-require_once "../modelos/Noticia.php";
 
+// INICIO - TRAMPA DE ERRORES (Paso 1)
+error_reporting(E_ALL);
+ini_set('ignore_repeated_errors', TRUE);
+ini_set('display_errors', FALSE); // Apagamos el volcado en pantalla para no romper AJAX
+ini_set('log_errors', TRUE);
+// Creamos el archivo de log un nivel arriba (en la raíz del proyecto)
+ini_set('error_log', dirname(__DIR__) . '/error_ipunto.log');
+// FIN - TRAMPA DE ERRORES
+
+require_once "../modelos/Noticia.php";
 $noticia = new Noticia();
 
 // Variables del formulario
@@ -15,6 +24,11 @@ $cuerpo = isset($_POST["cuerpo"]) ? $_POST["cuerpo"] : ""; // Mantiene el párra
 $autor = isset($_POST["autor"]) ? limpiarCadena($_POST["autor"]) : "";
 $calificacion = isset($_POST["calificacion"]) ? limpiarCadena($_POST["calificacion"]) : "";
 $explicacion = isset($_POST["explicacion_calificacion"]) ? limpiarCadena($_POST["explicacion_calificacion"]) : "";
+// Escudo de Sesión: Detiene la ejecución si la sesión caducó en Hostinger
+if (!isset($_SESSION["idusuario"]) || empty($_SESSION["idusuario"])) {
+    echo "Error de Sesión: Tu sesión ha caducado por inactividad. Por favor, copia el texto de tu noticia y vuelve a iniciar sesión.";
+    exit; // Evita enviar valores NULL a la BD y rompe la ejecución limpia
+};
 $idusuario = $_SESSION["idusuario"];
 
 /**

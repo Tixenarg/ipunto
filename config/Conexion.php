@@ -1,4 +1,12 @@
 <?php 
+// Configuración estricta de log de errores
+error_reporting(E_ALL);
+ini_set('ignore_repeated_errors', TRUE);
+ini_set('display_errors', FALSE); // Evita imprimir errores en la respuesta AJAX
+ini_set('log_errors', TRUE);
+
+// El archivo se creará en la raíz del proyecto (ej: /php-error.log)
+ini_set('error_log', dirname(__DIR__) . '/php-error.log');
 require_once "global.php";
 
 // Creamos la conexión a la base de datos utilizando las constantes de global.php
